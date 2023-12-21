@@ -46,7 +46,29 @@ export const FoodContent = styled.div`
 `;
 
 export const FoodInfos = styled.div`
-  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  > h1 {
+    color: ${({ theme }) => theme.COLORS.LIGHT_300};
+
+    font-family: Poppins;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%;
+  }
+
+  > span {
+    color: ${({ theme }) => theme.COLORS.LIGHT_300};
+
+    font-family: Poppins;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 140%;
+  }
 `;
 
 export const FoodActions = styled.div`
