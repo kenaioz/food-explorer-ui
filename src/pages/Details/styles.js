@@ -5,20 +5,23 @@ export const Container = styled.div`
   min-height: 100vh;
 `;
 
+export const ContentWrapper = styled.div`
+  padding-bottom: 60px;
+`;
+
 export const BackWrapper = styled.div`
   width: fit-content;
-
-  display: flex;
-  align-items: flex-end;
-  text-align: center;
-
-  gap: 10px;
 
   color: ${({ theme }) => theme.COLORS.LIGHT_300};
 
   margin-bottom: 42px;
 
   > a {
+    display: flex;
+    align-items: flex-end;
+    text-align: center;
+    gap: 10px;
+
     font-family: Poppins;
     font-size: 24px;
     font-style: normal;

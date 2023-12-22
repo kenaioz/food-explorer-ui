@@ -27,39 +27,45 @@ export function Details() {
   return (
     <Container>
       <Header />
+
       <Layout>
-        <BackWrapper>
-          <ButtonIcon icon={SlArrowLeft} size={24} />
-          <a>voltar</a>
-        </BackWrapper>
-        <DetailsContent>
-          <img src={foodImage} alt="" />
+        <ContentWrapper>
+          <BackWrapper>
+            <a>
+              <ButtonIcon icon={SlArrowLeft} size={24} />
+              Voltar
+            </a>
+          </BackWrapper>
+          <DetailsContent>
+            <img src={foodImage} alt="" />
 
-          <FoodContent>
-            <FoodInfos>
-              <h1>Spaguetti Gambe</h1>
+            <FoodContent>
+              <FoodInfos>
+                <h1>Spaguetti Gambe</h1>
 
-              <span>
-                Rabanetes, folhas verdes e molho agridoce salpicados com
-                gergelim. O pão naan dá um toque especial.
-              </span>
+                <span>
+                  Rabanetes, folhas verdes e molho agridoce salpicados com
+                  gergelim. O pão naan dá um toque especial.
+                </span>
 
-              <ChipWrapper>
-                <Chip title="teste" />
-                <Chip title="teste" />
-                <Chip title="teste" />
-                <Chip title="teste" />
-                <Chip title="teste" />
-              </ChipWrapper>
-            </FoodInfos>
+                <ChipWrapper>
+                  <Chip title="teste" />
+                  <Chip title="teste" />
+                  <Chip title="teste" />
+                  <Chip title="teste" />
+                  <Chip title="teste" />
+                </ChipWrapper>
+              </FoodInfos>
 
-            <FoodActions>
-              <Quantity></Quantity>
-              <SmallButton title="Incluir ∙ R$ 25,00" />
-            </FoodActions>
-          </FoodContent>
-        </DetailsContent>
+              <FoodActions>
+                <Quantity></Quantity>
+                <SmallButton title="Incluir ∙ R$ 25,00" />
+              </FoodActions>
+            </FoodContent>
+          </DetailsContent>
+        </ContentWrapper>
       </Layout>
+
       <Footer />
     </Container>
   );

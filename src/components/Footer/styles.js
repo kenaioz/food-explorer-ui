@@ -7,7 +7,6 @@ export const Container = styled.div`
   width: 100%;
 
   padding: 24px 0;
-  margin-top: 60px;
 
   background-color: ${({ theme }) => theme.COLORS.DARK_600};
 `;
