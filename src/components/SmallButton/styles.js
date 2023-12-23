@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.button`
   background-color: ${({ theme }) => theme.COLORS.TINT_TOMATO_100};
+  background-color: ${({ theme, $secundary }) =>
+    $secundary ? theme.COLORS.DARK_800 : theme.COLORS.TINT_TOMATO_100};
   color: ${({ theme }) => theme.COLORS.LIGHT_100};
   font-size: 16px;
 

@@ -8,8 +8,8 @@ import { BrowserRouter } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { Details } from "../pages/Details";
 import { NotFound } from "../pages/NotFound";
-import { Suppliers } from "../pages/Suppliers";
-import { SalesReport } from "../pages/SalesReport";
+import { Edit } from "../pages/Edit";
+import { Create } from "../pages/Create";
 
 export function Routes() {
   // const { user } = useAuth();
@@ -17,7 +17,7 @@ export function Routes() {
   return (
     <BrowserRouter>
       {/* {user ? <AppRoutes /> : <AuthRoutes />} */}
-      <Details />
+      <Edit />
     </BrowserRouter>
   );
 }

@@ -1,8 +1,8 @@
 import { Container } from "./styles";
 
-export function SmallButton({ title, ...rest }) {
+export function SmallButton({ secundary = false, title, ...rest }) {
   return (
-    <Container type="button" {...rest}>
+    <Container $secundary={secundary} type="button" {...rest}>
       {title}
     </Container>
   );

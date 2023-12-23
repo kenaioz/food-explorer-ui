@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 import {
   Container,
-  BackWrapper,
   DetailsContent,
   FoodContent,
   FoodInfos,
@@ -10,12 +9,10 @@ import {
   ContentWrapper,
 } from "./styles";
 
-import { SlArrowLeft } from "react-icons/sl";
-
 import foodImage from "../../assets/FoodImageTests.png";
 
 import { Header } from "../../components/Header";
-import { ButtonIcon } from "../../components/ButtonIcon";
+import { BackWrapper } from "../../components/BackWrapper";
 import { Chip, ChipWrapper } from "../../components/Chip";
 import { Quantity } from "../../components/Quantity";
 import { SmallButton } from "../../components/SmallButton";
@@ -30,12 +27,7 @@ export function Details() {
 
       <Layout>
         <ContentWrapper>
-          <BackWrapper>
-            <a>
-              <ButtonIcon icon={SlArrowLeft} size={24} />
-              Voltar
-            </a>
-          </BackWrapper>
+          <BackWrapper />
           <DetailsContent>
             <img src={foodImage} alt="" />
 

@@ -25,7 +25,7 @@ export default createGlobalStyle`
     text-decoration: none;
   }
 
-  button, a {
+  button, a, select {
     cursor: pointer;
     transition: filter 0.2s;
   }
