@@ -1,4 +1,4 @@
-import { FiTruck, FiTag, FiShoppingCart } from "react-icons/fi";
+import { FiTag } from "react-icons/fi";
 
 import { Container, ContentWrapper } from "./styles";
 

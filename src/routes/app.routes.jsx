@@ -1,18 +1,18 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 
-import { Home } from '../pages/Home';
-import { Product } from '../pages/Product';
-import { NotFound } from '../pages/NotFound';
-import { Suppliers } from '../pages/Suppliers';
-import { SalesReport } from '../pages/SalesReport';
+import { Home } from "../pages/Home";
+import { Details } from "../pages/Details";
+import { NotFound } from "../pages/NotFound";
+import { Edit } from "../pages/Edit";
+import { Create } from "../pages/Create";
 
 export function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={< Home />} />
-      <Route path="/product" element={<Product />} />
-      <Route path="/sales-report" element={<SalesReport />} />
-      <Route path="/suppliers" element={<Suppliers />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/details/:id" element={<Details />} />
+      <Route path="/edit/:id" element={<Edit />} />
+      <Route path="/create" element={<Create />} />
 
       <Route path="*" exact={true} element={<NotFound />} />
     </Routes>

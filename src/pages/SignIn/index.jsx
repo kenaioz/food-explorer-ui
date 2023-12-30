@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { FiMail, FiLock, FiUserPlus } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 import { useAuth } from "../../hooks/auth";
 
-import { Input } from "../../components/Input";
+import { Input } from "../../components/Forms";
 import { Button } from "../../components/Button";
 
 import { Container, Form } from "./styles";
-import { Link } from "react-router-dom";
+
+import LogoSGV from "../../assets/Logo-SVG.svg";
 
 export function SignIn() {
   const [email, setEmail] = useState("");
@@ -21,29 +22,29 @@ export function SignIn() {
 
   return (
     <Container>
+      <img src={LogoSGV} alt="" />
       <Form>
-        <h1>Faça seu login</h1>
+        <h1>Faça login</h1>
 
         <Input
-          placeholder="E-mail"
+          id="email"
+          label="E-mail"
+          placeholder="Exemplo: exemplo@exemplo.com.br"
           type="text"
-          icon={FiMail}
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <Input
-          placeholder="Senha"
+          id="password"
+          label="Senha"
+          placeholder="No mínimo 6 caracteres"
           type="password"
-          icon={FiLock}
           onChange={(e) => setPassword(e.target.value)}
         />
 
         <Button title="Entrar" onClick={handleSignIn} />
 
-        <Link to="/register">
-          <FiUserPlus />
-          Criar conta
-        </Link>
+        <Link to="/register">Criar uma conta</Link>
       </Form>
     </Container>
   );
