@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import {
   Container,
@@ -29,6 +30,10 @@ import { Layout } from "../../components/Layout";
 export function Edit() {
   const [ingredients, setIngredients] = useState("Batata Frita");
   const [newTag, setNewTag] = useState("");
+
+  const params = useParams();
+
+  console.log(params.id);
 
   return (
     <Container>

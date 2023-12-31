@@ -1,6 +1,6 @@
-import { FiTag } from "react-icons/fi";
-
 import { Container, ContentWrapper } from "./styles";
+
+import { FiTag } from "react-icons/fi";
 
 import { Header } from "../../components/Header";
 import { CardsSection } from "../../components/CardsSection";

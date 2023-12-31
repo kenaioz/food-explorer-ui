@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import { FiSearch, FiLogOut } from "react-icons/fi";
 import { PiReceipt } from "react-icons/pi";
@@ -28,7 +28,7 @@ export function Header() {
   }
 
   function handleNewFood() {
-    alert("Teste criar prato");
+    navigate("/create");
   }
 
   function handleSignOut() {

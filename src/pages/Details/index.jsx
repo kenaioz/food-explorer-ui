@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import {
   Container,
@@ -28,6 +28,7 @@ export function Details() {
   const [priceTest, setPriceTest] = useState("R$ 25,00");
 
   const navigate = useNavigate();
+  const params = useParams();
 
   const { user } = useAuth();
 
@@ -35,8 +36,8 @@ export function Details() {
     alert("Adicionar ao pedido");
   }
 
-  function handleEdit() {
-    alert("Ir para edição");
+  function handleEdit(id) {
+    navigate(`/edit/${id}`);
   }
 
   return (
@@ -73,7 +74,10 @@ export function Details() {
                 {[USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(
                   user.role
                 ) ? (
-                  <SmallButton title="Editar Prato" onClick={handleEdit} />
+                  <SmallButton
+                    title="Editar Prato"
+                    onClick={() => handleEdit(params.id)}
+                  />
                 ) : (
                   <SmallButton
                     title={`Incluir ∙ ${priceTest}`}
