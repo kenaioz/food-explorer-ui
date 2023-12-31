@@ -10,15 +10,15 @@ import { USER_PROFILE } from "../utils/roles";
 
 export function Routes() {
   const { user } = useAuth();
-  // prettier-ignore
 
+  // prettier-ignore
   function AppRoutes() {
     switch (user.role) {
       case USER_PROFILE.ADMIN:
         return <AdminRoutes />;
       case USER_PROFILE.CUSTOMER:
         return <CustomerRoutes />;
-      case USER_PROFILE.SALES:
+      case USER_PROFILE.EDITOR:
         return <EditorRoutes />;
 
       default:
