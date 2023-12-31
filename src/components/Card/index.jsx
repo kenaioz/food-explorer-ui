@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { Container, CardContent, CardActions } from "./styles";
 
 import { IoIosHeartEmpty } from "react-icons/io";
@@ -9,14 +7,19 @@ import { SmallButton } from "../SmallButton";
 import { ButtonIcon } from "../ButtonIcon";
 import { Quantity } from "../Quantity";
 
+import { useAuth } from "../../hooks/auth";
+import { USER_PROFILE } from "../../utils/roles";
+
 export function Card({ id, image, title, description, price }) {
-  const [teste, setTeste] = useState("costumer");
+  const { user } = useAuth();
+
   return (
     <Container>
-      <ButtonIcon
-        icon={teste == "admin" ? GoPencil : IoIosHeartEmpty}
-        size={32}
-      />
+      {[USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(user.role) ? (
+        <ButtonIcon icon={GoPencil} size={32} />
+      ) : (
+        <ButtonIcon icon={IoIosHeartEmpty} size={32} />
+      )}
 
       <CardContent>
         <img src={image} alt="Image Food" />

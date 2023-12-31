@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -20,7 +21,24 @@ import { Footer } from "../../components/Footer";
 
 import { Layout } from "../../components/Layout";
 
+import { useAuth } from "../../hooks/auth";
+import { USER_PROFILE } from "../../utils/roles";
+
 export function Details() {
+  const [priceTest, setPriceTest] = useState("R$ 25,00");
+
+  const navigate = useNavigate();
+
+  const { user } = useAuth();
+
+  function handleAddOrders() {
+    alert("Adicionar ao pedido");
+  }
+
+  function handleEdit() {
+    alert("Ir para edição");
+  }
+
   return (
     <Container>
       <Header />
@@ -51,7 +69,17 @@ export function Details() {
 
               <FoodActions>
                 <Quantity></Quantity>
-                <SmallButton title="Incluir ∙ R$ 25,00" />
+
+                {[USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(
+                  user.role
+                ) ? (
+                  <SmallButton title="Editar Prato" onClick={handleEdit} />
+                ) : (
+                  <SmallButton
+                    title={`Incluir ∙ ${priceTest}`}
+                    onClick={handleAddOrders}
+                  />
+                )}
               </FoodActions>
             </FoodContent>
           </DetailsContent>

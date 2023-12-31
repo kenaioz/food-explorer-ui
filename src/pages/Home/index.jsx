@@ -9,7 +9,7 @@ import { Footer } from "../../components/Footer";
 
 import { Layout } from "../../components/Layout";
 
-import logoSVG from "../../assets/Logo-SVG.svg";
+import logoSVG from "../../assets/Logo.svg";
 
 export function Home() {
   return (

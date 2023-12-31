@@ -8,7 +8,7 @@ import { Button } from "../../components/Button";
 
 import { Container, Form } from "./styles";
 
-import LogoSGV from "../../assets/Logo-SVG.svg";
+import LogoSGV from "../../assets/Logo.svg";
 
 export function SignIn() {
   const [email, setEmail] = useState("");

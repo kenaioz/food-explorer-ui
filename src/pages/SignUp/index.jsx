@@ -7,7 +7,7 @@ import { Container, Form } from "./styles";
 import { Input } from "../../components/Forms";
 import { Button } from "../../components/Button";
 
-import LogoSGV from "../../assets/Logo-SVG.svg";
+import LogoSGV from "../../assets/Logo.svg";
 
 export function SignUp() {
   const [name, setName] = useState("");

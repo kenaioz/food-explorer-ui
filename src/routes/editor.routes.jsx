@@ -6,7 +6,7 @@ import { NotFound } from "../pages/NotFound";
 import { Edit } from "../pages/Edit";
 import { Create } from "../pages/Create";
 
-export function AppRoutes() {
+export function EditorRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
