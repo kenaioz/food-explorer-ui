@@ -33,8 +33,6 @@ export function Edit() {
 
   const params = useParams();
 
-  console.log(params.id);
-
   return (
     <Container>
       <Header />
