@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   LabelInputWrapper,
   ContainerInput,
@@ -7,6 +9,7 @@ import {
   ContainerItem,
   InputIconWrapper,
   ContainerFile,
+  ContainerItemTest,
 } from "./styles";
 
 import { FiPlus, FiX, FiUpload } from "react-icons/fi";
@@ -15,7 +18,7 @@ export function Input({ bigger = false, label, ...rest }) {
   return (
     <LabelInputWrapper $bigger={bigger}>
       <label htmlFor={rest.id}>{label}</label>
-      <ContainerInput {...rest} />
+      <ContainerInput autocomplete="off" {...rest} />
     </LabelInputWrapper>
   );
 }
@@ -33,8 +36,11 @@ export function Dropdown({ label, categories, ...rest }) {
   return (
     <LabelInputWrapper>
       <label htmlFor={rest.id}>{label}</label>
-      <ContainerDropdown {...rest}>
-        {categories.map((category, index) => (
+      <ContainerDropdown defaultValue="" {...rest}>
+        <option value="" disabled hidden>
+          {rest.placeholder}
+        </option>
+        {categories.map((category) => (
           <option key={category.id} value={category.id}>
             {category.name}
           </option>
@@ -53,7 +59,7 @@ export function IngredientItems({ bigger = false, children, label }) {
   );
 }
 
-export function IngredientItem({ isNew = false, value, ...rest }) {
+export function IngredientItem({ isNew = false, value, onClick, ...rest }) {
   return (
     <ContainerItem $isnew={isNew}>
       <input
@@ -64,10 +70,63 @@ export function IngredientItem({ isNew = false, value, ...rest }) {
         size={isNew ? 8 : value.length}
         {...rest}
       />
-      <button type="button" className={isNew ? "button-add" : "button-delete"}>
+      <button
+        type="button"
+        onClick={onClick}
+        className={isNew ? "button-add" : "button-delete"}
+      >
         {isNew ? <FiPlus size={12} /> : <FiX size={12} />}
       </button>
     </ContainerItem>
+  );
+}
+
+export function IngredientTest({
+  isNew = false,
+  ingredients,
+  onChange,
+  onClick,
+  ...rest
+}) {
+  const [selectedIngredient, setSelectedIngredient] = useState("0");
+
+  const handleResetSelect = () => {
+    setSelectedIngredient("0");
+  };
+
+  return (
+    <ContainerItemTest $isnew={isNew}>
+      <select
+        value={selectedIngredient}
+        onChange={(e) => {
+          setSelectedIngredient(e.target.value);
+          onChange(Number(e.target.value));
+        }}
+      >
+        <option value="0" disabled hidden>
+          {rest.placeholder}
+        </option>
+        {ingredients.map((ingredient) => (
+          <option
+            key={ingredient.id}
+            value={ingredient.id}
+            label={ingredient.name}
+          >
+            {ingredient.name}
+          </option>
+        ))}
+      </select>
+      <button
+        type="button"
+        onClick={() => {
+          handleResetSelect();
+          onClick(); // Chame a função onClick após redefinir a seleção
+        }}
+        className={isNew ? "button-add" : "button-delete"}
+      >
+        {isNew ? <FiPlus size={12} /> : <FiX size={12} />}
+      </button>
+    </ContainerItemTest>
   );
 }
 

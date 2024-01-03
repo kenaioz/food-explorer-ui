@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import {
   Container,
@@ -20,6 +20,7 @@ import {
   IngredientItems,
   IngredientItem,
   FileUploader,
+  IngredientTest,
 } from "../../components/Forms";
 import { SmallButton } from "../../components/SmallButton";
 import { Footer } from "../../components/Footer";
@@ -27,8 +28,91 @@ import { Footer } from "../../components/Footer";
 import { Layout } from "../../components/Layout";
 
 export function Create() {
-  const [ingredients, setIngredients] = useState("Batata Frita");
-  const [newTag, setNewTag] = useState("");
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState(0);
+  const [price, setPrice] = useState("");
+  const [newIngredientId, setNewIngredientId] = useState(0);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [description, setDescription] = useState("");
+
+  const ingredientsOptions = [
+    {
+      id: 1,
+      name: "Arroz",
+    },
+    {
+      id: 2,
+      name: "Feijão",
+    },
+    {
+      id: 3,
+      name: "Carne",
+    },
+  ];
+  const categoriesOptions = [
+    {
+      id: 1,
+      name: "Refeições",
+    },
+    {
+      id: 2,
+      name: "Sobremesas",
+    },
+    {
+      id: 3,
+      name: "Bebidas",
+    },
+  ];
+
+  function handleAddIngredient() {
+    if (!newIngredientId) {
+      return alert("Selecione um ingrediente antes de adiciona-lo");
+    }
+
+    if (ingredients.includes(newIngredientId)) {
+      return alert("O ingrediente não pode ser adicionado duas vezes");
+    }
+
+    const ingredient = ingredientsOptions.find(
+      (ingredient) => ingredient.id === newIngredientId
+    );
+
+    setSelectedIngredients((prevState) => [...prevState, ingredient]);
+    setIngredients([...ingredients, newIngredientId]);
+    setNewIngredientId(0);
+  }
+
+  function handleRemoveIngredient(deleted) {
+    setSelectedIngredients((prevState) =>
+      prevState.filter((ingredient) => ingredient.id !== deleted)
+    );
+
+    setIngredients(ingredients.filter((ingredient) => ingredient !== deleted));
+  }
+
+  function formsValidantion() {
+    if (!name) {
+      return alert("Preencha o nome");
+    }
+    if (!category) {
+      return alert("Selecione a categoria");
+    }
+    if (!ingredients) {
+      return alert("Selecione os ingredientes");
+    }
+    if (!price) {
+      return alert("Preencha o preço");
+    }
+    if (!description) {
+      return alert("Preencha a descrição");
+    }
+  }
+
+  function handleForms() {
+    formsValidantion();
+    console.log({ name, category, ingredients, price, description });
+  }
 
   return (
     <Container>
@@ -48,52 +132,55 @@ export function Create() {
                   id="foodName"
                   label="Nome"
                   placeholder="Ex.: Salada Ceasar"
+                  onChange={(e) => setName(e.target.value)}
+                  required
                 />
                 <Dropdown
                   id="categoriesDropDown"
                   label="Categorias"
-                  categories={[
-                    {
-                      id: 1,
-                      name: "Refeições",
-                    },
-                    {
-                      id: 2,
-                      name: "Sobremesas",
-                    },
-                    {
-                      id: 3,
-                      name: "Bebidas",
-                    },
-                  ]}
+                  placeholder="Selecione a categoria"
+                  categories={categoriesOptions}
+                  onChange={(e) => setCategory(Number(e.target.value))}
                 />
               </Row1>
               <Row2>
                 <IngredientItems label="Ingredientes" bigger>
-                  <IngredientItem
-                    id={1}
-                    value={ingredients}
-                    onChange={(e) => setNewTag(e.target.value)}
-                  />
-                  <IngredientItem
-                    id="ingredientsItems"
+                  {selectedIngredients.map((ingredient) => (
+                    <IngredientItem
+                      key={ingredient.id}
+                      value={ingredient.name}
+                      onClick={() => {
+                        handleRemoveIngredient(ingredient.id);
+                      }}
+                    />
+                  ))}
+                  <IngredientTest
+                    id="IngredientTest"
                     isNew
-                    value={newTag}
-                    onChange={(e) => setNewTag(e.target.value)}
+                    placeholder="Adicionar"
+                    ingredients={ingredientsOptions}
+                    onChange={setNewIngredientId}
+                    onClick={handleAddIngredient}
                   />
                 </IngredientItems>
 
-                <Input id="foodPrice" label="Preço" placeholder="R$ 00,00" />
+                <Input
+                  id="foodPrice"
+                  label="Preço"
+                  placeholder="R$ 00,00"
+                  onChange={(e) => setPrice(e.target.value)}
+                />
               </Row2>
               <Row3>
                 <TextArea
                   id="foodDescription"
                   label="Descrição"
                   placeholder="Teste Placeholder"
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </Row3>
               <Row4>
-                <SmallButton title="Salvar alterações" />
+                <SmallButton title="Salvar alterações" onClick={handleForms} />
               </Row4>
             </FormsFieldset>
           </Forms>

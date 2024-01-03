@@ -53,6 +53,7 @@ export const ContainerDropdown = styled.select`
 
   padding: 12px 14px;
   border-radius: 8px;
+  outline: none;
 
   color: ${({ theme }) => theme.COLORS.LIGHT_400};
 
@@ -119,6 +120,57 @@ export const ContainerItem = styled.div`
     &::placeholder {
       color: ${({ theme }) => theme.COLORS.LIGHT_500};
     }
+  }
+`;
+
+export const ContainerItemTest = styled.div`
+  width: fit-content;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background-color: ${({ theme, $isnew }) =>
+    $isnew ? "transparent" : theme.COLORS.LIGHT_600};
+  color: ${({ theme }) => theme.COLORS.LIGHT_500};
+
+  border: ${({ theme, $isnew }) =>
+    $isnew ? `1px dashed ${theme.COLORS.LIGHT_500}` : "none"};
+
+  border-radius: 8px;
+  padding: 10px 16px;
+
+  .button-delete {
+    color: ${({ theme }) => theme.COLORS.LIGHT_100};
+  }
+
+  .button-add {
+    color: ${({ theme }) => theme.COLORS.LIGHT_500};
+  }
+
+  > button {
+    border: none;
+    background: none;
+  }
+
+  > select {
+    appearance: none;
+    width: fit-content;
+    height: 32px;
+    color: ${({ theme }) => theme.COLORS.LIGHT_100};
+    background-color: transparent;
+
+    border: none;
+
+    &::placeholder {
+      color: ${({ theme }) => theme.COLORS.LIGHT_500};
+    }
+  }
+
+  > select:focus {
+    outline: none;
   }
 `;
 
