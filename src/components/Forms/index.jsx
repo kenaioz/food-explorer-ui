@@ -9,16 +9,16 @@ import {
   ContainerItem,
   InputIconWrapper,
   ContainerFile,
-  ContainerItemTest,
+  ContainerItemSelect,
 } from "./styles";
 
-import { FiPlus, FiX, FiUpload } from "react-icons/fi";
+import { FiPlus, FiX, FiUpload, FiCheck } from "react-icons/fi";
 
 export function Input({ bigger = false, label, ...rest }) {
   return (
     <LabelInputWrapper $bigger={bigger}>
       <label htmlFor={rest.id}>{label}</label>
-      <ContainerInput autocomplete="off" {...rest} />
+      <ContainerInput autoComplete="off" {...rest} />
     </LabelInputWrapper>
   );
 }
@@ -81,7 +81,7 @@ export function IngredientItem({ isNew = false, value, onClick, ...rest }) {
   );
 }
 
-export function IngredientTest({
+export function IngredientSelect({
   isNew = false,
   ingredients,
   onChange,
@@ -95,7 +95,7 @@ export function IngredientTest({
   };
 
   return (
-    <ContainerItemTest $isnew={isNew}>
+    <ContainerItemSelect>
       <select
         value={selectedIngredient}
         onChange={(e) => {
@@ -103,7 +103,7 @@ export function IngredientTest({
           onChange(Number(e.target.value));
         }}
       >
-        <option value="0" disabled hidden>
+        <option value="0" disabled>
           {rest.placeholder}
         </option>
         {ingredients.map((ingredient) => (
@@ -122,22 +122,25 @@ export function IngredientTest({
           handleResetSelect();
           onClick(); // Chame a função onClick após redefinir a seleção
         }}
-        className={isNew ? "button-add" : "button-delete"}
       >
-        {isNew ? <FiPlus size={12} /> : <FiX size={12} />}
+        <FiPlus size={12} />
       </button>
-    </ContainerItemTest>
+    </ContainerItemSelect>
   );
 }
 
-export function FileUploader({ label, ...rest }) {
+export function FileUploader({ imageSelected = false, label, ...rest }) {
   return (
-    <LabelInputWrapper>
+    <LabelInputWrapper $imageselected={imageSelected}>
       <span>{label}</span>
       <InputIconWrapper htmlFor={rest.id}>
         <div>
-          <FiUpload size={24} />
-          <span>Selecione uma imagem</span>
+          {!imageSelected ? <FiUpload size={24} /> : <FiCheck size={24} />}
+          {!imageSelected ? (
+            <span>Selecione uma imagem</span>
+          ) : (
+            <span>Imagem Selecionada</span>
+          )}
         </div>
         <ContainerFile type="file" {...rest}></ContainerFile>
       </InputIconWrapper>

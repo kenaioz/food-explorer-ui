@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   Container,
@@ -20,14 +21,22 @@ import {
   IngredientItems,
   IngredientItem,
   FileUploader,
-  IngredientTest,
+  IngredientSelect,
 } from "../../components/Forms";
 import { SmallButton } from "../../components/SmallButton";
 import { Footer } from "../../components/Footer";
 
 import { Layout } from "../../components/Layout";
 
+import { createFood, patchImage } from "../../services/foods";
+import { getAllCategories } from "../../services/categories";
+import { getAllIngredients } from "../../services/ingredients";
+
 export function Create() {
+  const navigate = useNavigate();
+
+  const [image, setImage] = useState("");
+  const [imageFile, setImageFile] = useState(null);
   const [name, setName] = useState("");
   const [category, setCategory] = useState(0);
   const [price, setPrice] = useState("");
@@ -35,35 +44,27 @@ export function Create() {
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [description, setDescription] = useState("");
+  const [ingredientsData, setIngredientsData] = useState([]);
+  const [categoriesData, setCategoriesData] = useState([]);
 
-  const ingredientsOptions = [
-    {
-      id: 1,
-      name: "Arroz",
-    },
-    {
-      id: 2,
-      name: "Feijão",
-    },
-    {
-      id: 3,
-      name: "Carne",
-    },
-  ];
-  const categoriesOptions = [
-    {
-      id: 1,
-      name: "Refeições",
-    },
-    {
-      id: 2,
-      name: "Sobremesas",
-    },
-    {
-      id: 3,
-      name: "Bebidas",
-    },
-  ];
+  useEffect(() => {
+    async function fetchIngredients() {
+      const response = await getAllIngredients();
+      setIngredientsData(response.data);
+    }
+    async function fetchCategories() {
+      const response = await getAllCategories();
+      setCategoriesData(response.data);
+    }
+
+    fetchIngredients();
+    fetchCategories();
+  }, []);
+
+  function handleChangeImage(event) {
+    const file = event.target.files[0];
+    setImageFile(file);
+  }
 
   function handleAddIngredient() {
     if (!newIngredientId) {
@@ -74,7 +75,7 @@ export function Create() {
       return alert("O ingrediente não pode ser adicionado duas vezes");
     }
 
-    const ingredient = ingredientsOptions.find(
+    const ingredient = ingredientsData.find(
       (ingredient) => ingredient.id === newIngredientId
     );
 
@@ -91,7 +92,10 @@ export function Create() {
     setIngredients(ingredients.filter((ingredient) => ingredient !== deleted));
   }
 
-  function formsValidantion() {
+  async function handleForms() {
+    if (!name) {
+      return alert("Preencha o nome");
+    }
     if (!name) {
       return alert("Preencha o nome");
     }
@@ -107,11 +111,17 @@ export function Create() {
     if (!description) {
       return alert("Preencha a descrição");
     }
-  }
 
-  function handleForms() {
-    formsValidantion();
-    console.log({ name, category, ingredients, price, description });
+    const foodId = await createFood({
+      name,
+      category,
+      ingredients,
+      price,
+      description,
+    });
+
+    await patchImage({ foodId: foodId.data, imageFile });
+    navigate("/");
   }
 
   return (
@@ -126,7 +136,21 @@ export function Create() {
               <legend>Adicionar Prato</legend>
 
               <Row1>
-                <FileUploader id="imageFile" label="Imagem do prato" />
+                {!imageFile ? (
+                  <FileUploader
+                    id="imageFile"
+                    label="Imagem do prato"
+                    onChange={handleChangeImage}
+                  />
+                ) : (
+                  <FileUploader
+                    id="imageFile"
+                    label="Imagem do prato"
+                    onChange={handleChangeImage}
+                    imageSelected
+                  />
+                )}
+
                 <Input
                   bigger
                   id="foodName"
@@ -139,7 +163,7 @@ export function Create() {
                   id="categoriesDropDown"
                   label="Categorias"
                   placeholder="Selecione a categoria"
-                  categories={categoriesOptions}
+                  categories={categoriesData}
                   onChange={(e) => setCategory(Number(e.target.value))}
                 />
               </Row1>
@@ -154,11 +178,11 @@ export function Create() {
                       }}
                     />
                   ))}
-                  <IngredientTest
+                  <IngredientSelect
                     id="IngredientTest"
                     isNew
                     placeholder="Adicionar"
-                    ingredients={ingredientsOptions}
+                    ingredients={ingredientsData}
                     onChange={setNewIngredientId}
                     onClick={handleAddIngredient}
                   />

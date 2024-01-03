@@ -69,10 +69,10 @@ export const ContainerItems = styled.div`
   flex-wrap: wrap;
   gap: 16px;
 
-  height: 48px;
+  height: fit-content;
   width: 100%;
 
-  padding: 4px 8px;
+  padding: 8px;
   border-radius: 8px;
 
   background-color: ${({ theme }) => theme.COLORS.DARK_800};
@@ -117,13 +117,19 @@ export const ContainerItem = styled.div`
 
     border: none;
 
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+
     &::placeholder {
       color: ${({ theme }) => theme.COLORS.LIGHT_500};
     }
   }
 `;
 
-export const ContainerItemTest = styled.div`
+export const ContainerItemSelect = styled.div`
   width: fit-content;
   height: 32px;
 
@@ -132,27 +138,18 @@ export const ContainerItemTest = styled.div`
   justify-content: center;
   gap: 8px;
 
-  background-color: ${({ theme, $isnew }) =>
-    $isnew ? "transparent" : theme.COLORS.LIGHT_600};
+  background-color: "transparent";
   color: ${({ theme }) => theme.COLORS.LIGHT_500};
 
-  border: ${({ theme, $isnew }) =>
-    $isnew ? `1px dashed ${theme.COLORS.LIGHT_500}` : "none"};
+  border: ${({ theme }) => `1px dashed ${theme.COLORS.LIGHT_500}`};
 
   border-radius: 8px;
   padding: 10px 16px;
 
-  .button-delete {
-    color: ${({ theme }) => theme.COLORS.LIGHT_100};
-  }
-
-  .button-add {
-    color: ${({ theme }) => theme.COLORS.LIGHT_500};
-  }
-
   > button {
     border: none;
     background: none;
+    color: ${({ theme }) => theme.COLORS.LIGHT_500};
   }
 
   > select {
@@ -164,9 +161,11 @@ export const ContainerItemTest = styled.div`
 
     border: none;
 
-    &::placeholder {
-      color: ${({ theme }) => theme.COLORS.LIGHT_500};
-    }
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
   }
 
   > select:focus {
