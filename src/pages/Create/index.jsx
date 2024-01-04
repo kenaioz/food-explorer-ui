@@ -20,8 +20,8 @@ import {
   Dropdown,
   IngredientItems,
   IngredientItem,
-  FileUploader,
   IngredientSelect,
+  FileUploader,
 } from "../../components/Forms";
 import { SmallButton } from "../../components/SmallButton";
 import { Footer } from "../../components/Footer";
@@ -156,7 +156,7 @@ export function Create() {
                   id="foodName"
                   label="Nome"
                   placeholder="Ex.: Salada Ceasar"
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={setName}
                   required
                 />
                 <Dropdown
@@ -164,7 +164,7 @@ export function Create() {
                   label="Categorias"
                   placeholder="Selecione a categoria"
                   categories={categoriesData}
-                  onChange={(e) => setCategory(Number(e.target.value))}
+                  onChange={setCategory}
                 />
               </Row1>
               <Row2>
@@ -179,7 +179,7 @@ export function Create() {
                     />
                   ))}
                   <IngredientSelect
-                    id="IngredientTest"
+                    id="IngredientsSelect"
                     isNew
                     placeholder="Adicionar"
                     ingredients={ingredientsData}
@@ -192,7 +192,7 @@ export function Create() {
                   id="foodPrice"
                   label="Preço"
                   placeholder="R$ 00,00"
-                  onChange={(e) => setPrice(e.target.value)}
+                  onChange={setPrice}
                 />
               </Row2>
               <Row3>
@@ -200,7 +200,7 @@ export function Create() {
                   id="foodDescription"
                   label="Descrição"
                   placeholder="Teste Placeholder"
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={setDescription}
                 />
               </Row3>
               <Row4>

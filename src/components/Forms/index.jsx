@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import {
   LabelInputWrapper,
@@ -14,34 +14,77 @@ import {
 
 import { FiPlus, FiX, FiUpload, FiCheck } from "react-icons/fi";
 
-export function Input({ bigger = false, label, ...rest }) {
+export function Input({ bigger = false, value, label, onChange, ...rest }) {
+  const [inputValue, setInputValue] = useState(value || "");
+
+  useEffect(() => {
+    setInputValue(value || "");
+  }, [value]);
+
   return (
     <LabelInputWrapper $bigger={bigger}>
       <label htmlFor={rest.id}>{label}</label>
-      <ContainerInput autoComplete="off" {...rest} />
+      <ContainerInput
+        id={rest.id}
+        placeholder={rest.placeholder}
+        autoComplete="off"
+        value={inputValue}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          onChange(e.target.id, e.target.value);
+        }}
+      />
     </LabelInputWrapper>
   );
 }
 
-export function TextArea({ label, ...rest }) {
+export function TextArea({ label, value, onChange, ...rest }) {
+  const [texteAreaValue, setTexteAreaValue] = useState(value || "");
+  useEffect(() => {
+    setTexteAreaValue(value || "");
+  }, [value]);
   return (
     <LabelInputWrapper>
       <label htmlFor={rest.id}>{label}</label>
-      <ContainerTextArea {...rest} />
+      <ContainerTextArea
+        id={rest.id}
+        placeholder={rest.placeholder}
+        autoComplete="off"
+        value={texteAreaValue}
+        onChange={(e) => {
+          setTexteAreaValue(e.target.value);
+          onChange(e.target.id, e.target.value);
+        }}
+      />
     </LabelInputWrapper>
   );
 }
 
-export function Dropdown({ label, categories, ...rest }) {
+export function Dropdown({ id, label, categories, onChange, value, ...rest }) {
+  const [selectedCategory, setSelectedCategory] = useState(value || "0");
+
+  console.log(selectedCategory);
+
+  useEffect(() => {
+    setSelectedCategory(value || "");
+  }, [value]);
+
   return (
     <LabelInputWrapper>
       <label htmlFor={rest.id}>{label}</label>
-      <ContainerDropdown defaultValue="" {...rest}>
-        <option value="" disabled hidden>
+      <ContainerDropdown
+        id={id}
+        value={selectedCategory}
+        onChange={(e) => {
+          setSelectedCategory(e.target.value);
+          onChange(e.target.id, Number(e.target.value));
+        }}
+      >
+        <option value="0" disabled>
           {rest.placeholder}
         </option>
         {categories.map((category) => (
-          <option key={category.id} value={category.id}>
+          <option key={category.id} value={category.id} label={category.name}>
             {category.name}
           </option>
         ))}
@@ -81,13 +124,7 @@ export function IngredientItem({ isNew = false, value, onClick, ...rest }) {
   );
 }
 
-export function IngredientSelect({
-  isNew = false,
-  ingredients,
-  onChange,
-  onClick,
-  ...rest
-}) {
+export function IngredientSelect({ ingredients, onChange, onClick, ...rest }) {
   const [selectedIngredient, setSelectedIngredient] = useState("0");
 
   const handleResetSelect = () => {
@@ -95,7 +132,7 @@ export function IngredientSelect({
   };
 
   return (
-    <ContainerItemSelect>
+    <ContainerItemSelect $value={selectedIngredient}>
       <select
         value={selectedIngredient}
         onChange={(e) => {
@@ -120,7 +157,7 @@ export function IngredientSelect({
         type="button"
         onClick={() => {
           handleResetSelect();
-          onClick(); // Chame a função onClick após redefinir a seleção
+          onClick();
         }}
       >
         <FiPlus size={12} />

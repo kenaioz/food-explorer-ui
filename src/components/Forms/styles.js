@@ -154,9 +154,9 @@ export const ContainerItemSelect = styled.div`
 
   > select {
     appearance: none;
-    width: fit-content;
+    width: ${({ $value }) => ($value == 0 ? "70px" : "fit-content")};
     height: 32px;
-    color: ${({ theme }) => theme.COLORS.LIGHT_100};
+    color: ${({ theme }) => theme.COLORS.LIGHT_500};
     background-color: transparent;
 
     border: none;

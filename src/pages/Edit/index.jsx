@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 import {
   Container,
@@ -20,6 +20,7 @@ import {
   Dropdown,
   IngredientItems,
   IngredientItem,
+  IngredientSelect,
   FileUploader,
 } from "../../components/Forms";
 import { SmallButton } from "../../components/SmallButton";
@@ -27,11 +28,106 @@ import { Footer } from "../../components/Footer";
 
 import { Layout } from "../../components/Layout";
 
-export function Edit() {
-  const [ingredients, setIngredients] = useState("Batata Frita");
-  const [newTag, setNewTag] = useState("");
+import { api } from "../../services/api";
+import { getIndexFood, updateFood } from "../../services/foods";
+import { getAllCategories } from "../../services/categories";
+import { getAllIngredients } from "../../services/ingredients";
 
+export function Edit() {
+  const [foodData, setFoodData] = useState({});
+  const [ingredientsData, setIngredientsData] = useState([]);
+  const [categoriesData, setCategoriesData] = useState([]);
+
+  const [newIngredientId, setNewIngredientId] = useState(0);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [ingredientsIds, setIngredientsIds] = useState([]);
+
+  const navigate = useNavigate();
   const params = useParams();
+
+  useEffect(() => {
+    async function fetchIngredients() {
+      const response = await getAllIngredients();
+      setIngredientsData(response.data);
+    }
+    async function fetchCategories() {
+      const response = await getAllCategories();
+      setCategoriesData(response.data);
+    }
+    async function fetchFood() {
+      const response = await getIndexFood(params.id);
+
+      const arrayIds = response.data.ingredients.map(
+        (ingredient) => ingredient.id
+      );
+
+      const modifiedData = {
+        ...response.data,
+        ingredients: arrayIds,
+      };
+
+      setFoodData(modifiedData);
+      setSelectedIngredients(response.data.ingredients);
+      setIngredientsIds(arrayIds);
+    }
+
+    fetchIngredients();
+    fetchCategories();
+    fetchFood();
+  }, []);
+
+  useEffect(() => {
+    if (foodData.category) {
+      if (typeof foodData.category === "object") {
+        updateFormsData("category", foodData.category.id);
+      }
+    }
+  }, [foodData]);
+
+  function handleAddIngredient() {
+    if (!newIngredientId) {
+      return alert("Selecione um ingrediente antes de adiciona-lo");
+    }
+
+    if (ingredientsIds.includes(newIngredientId)) {
+      return alert("O ingrediente não pode ser adicionado duas vezes");
+    }
+
+    const ingredient = ingredientsData.find(
+      (ingredient) => ingredient.id === newIngredientId
+    );
+
+    const updatedingredientsIds = [...ingredientsIds, newIngredientId];
+    setSelectedIngredients((prevState) => [...prevState, ingredient]);
+    setIngredientsIds(updatedingredientsIds);
+    updateFormsData("ingredients", updatedingredientsIds);
+    setNewIngredientId(0);
+  }
+
+  function handleRemoveIngredient(deleted) {
+    setSelectedIngredients((prevState) =>
+      prevState.filter((ingredient) => ingredient.id !== deleted)
+    );
+
+    const filteredIds = ingredientsIds.filter(
+      (ingredient) => ingredient !== deleted
+    );
+    setIngredientsIds(filteredIds);
+
+    updateFormsData("ingredients", filteredIds);
+  }
+
+  function updateFormsData(field, data) {
+    setFoodData({
+      ...foodData,
+      [field]: data,
+    });
+  }
+
+  async function handleForms() {
+    console.log(foodData);
+    await updateFood(foodData);
+  }
 
   return (
     <Container>
@@ -48,56 +144,63 @@ export function Edit() {
                 <FileUploader id="imageFile" label="Imagem do prato" />
                 <Input
                   bigger
-                  id="foodName"
+                  id="name"
                   label="Nome"
+                  value={foodData.name}
                   placeholder="Ex.: Salada Ceasar"
+                  onChange={updateFormsData}
                 />
                 <Dropdown
-                  id="categoriesDropDown"
+                  id="category"
                   label="Categorias"
-                  categories={[
-                    {
-                      id: 1,
-                      name: "Refeições",
-                    },
-                    {
-                      id: 2,
-                      name: "Sobremesas",
-                    },
-                    {
-                      id: 3,
-                      name: "Bebidas",
-                    },
-                  ]}
+                  placeholder="Selecione uma categoria"
+                  value={foodData.category}
+                  categories={categoriesData}
+                  onChange={updateFormsData}
                 />
               </Row1>
               <Row2>
                 <IngredientItems label="Ingredientes" bigger>
-                  <IngredientItem
-                    id={1}
-                    value={ingredients}
-                    onChange={(e) => setNewTag(e.target.value)}
-                  />
-                  <IngredientItem
-                    id="ingredientsItems"
+                  {selectedIngredients &&
+                    selectedIngredients.map((ingredient) => (
+                      <IngredientItem
+                        key={ingredient.id}
+                        value={ingredient.name}
+                        onClick={() => {
+                          handleRemoveIngredient(ingredient.id);
+                        }}
+                      />
+                    ))}
+                  <IngredientSelect
+                    id="ingredients"
                     isNew
-                    value={newTag}
-                    onChange={(e) => setNewTag(e.target.value)}
+                    placeholder="Adicionar"
+                    ingredients={ingredientsData}
+                    onChange={setNewIngredientId}
+                    onClick={handleAddIngredient}
                   />
                 </IngredientItems>
 
-                <Input id="foodPrice" label="Preço" placeholder="R$ 00,00" />
+                <Input
+                  id="price"
+                  label="Preço"
+                  value={foodData.price}
+                  placeholder="R$ 00,00"
+                  onChange={updateFormsData}
+                />
               </Row2>
               <Row3>
                 <TextArea
-                  id="foodDescription"
+                  id="description"
                   label="Descrição"
-                  placeholder="Teste Placeholder"
+                  value={foodData.description}
+                  placeholder="Fale brevemente sobre o prato, seus ingredientes e composição"
+                  onChange={updateFormsData}
                 />
               </Row3>
               <Row4>
                 <SmallButton title="Excluir prato" secundary />
-                <SmallButton title="Salvar alterações" />
+                <SmallButton title="Salvar alterações" onClick={handleForms} />
               </Row4>
             </FormsFieldset>
           </Forms>

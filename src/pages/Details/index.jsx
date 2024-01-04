@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import {
@@ -9,8 +9,6 @@ import {
   FoodActions,
   ContentWrapper,
 } from "./styles";
-
-import foodImage from "../../assets/FoodImageTests.png";
 
 import { Header } from "../../components/Header";
 import { BackWrapper } from "../../components/BackWrapper";
@@ -24,13 +22,25 @@ import { Layout } from "../../components/Layout";
 import { useAuth } from "../../hooks/auth";
 import { USER_PROFILE } from "../../utils/roles";
 
+import { api } from "../../services/api";
+import { getIndexFood } from "../../services/foods";
+
 export function Details() {
-  const [priceTest, setPriceTest] = useState("R$ 25,00");
+  const [foodData, setFoodData] = useState({});
 
   const navigate = useNavigate();
   const params = useParams();
 
   const { user } = useAuth();
+
+  useEffect(() => {
+    async function fetchFood() {
+      const response = await getIndexFood(params.id);
+      setFoodData(response.data);
+    }
+
+    fetchFood();
+  }, []);
 
   function handleAddOrders() {
     alert("Adicionar ao pedido");
@@ -48,23 +58,24 @@ export function Details() {
         <ContentWrapper>
           <BackWrapper />
           <DetailsContent>
-            <img src={foodImage} alt="" />
+            {foodData.image && (
+              <img
+                src={`${api.defaults.baseURL}/files/${foodData.image}`}
+                alt=""
+              />
+            )}
 
             <FoodContent>
               <FoodInfos>
-                <h1>Spaguetti Gambe</h1>
+                <h1>{foodData.name}</h1>
 
-                <span>
-                  Rabanetes, folhas verdes e molho agridoce salpicados com
-                  gergelim. O pão naan dá um toque especial.
-                </span>
+                <span>{foodData.description}</span>
 
                 <ChipWrapper>
-                  <Chip title="teste" />
-                  <Chip title="teste" />
-                  <Chip title="teste" />
-                  <Chip title="teste" />
-                  <Chip title="teste" />
+                  {foodData.ingredients &&
+                    foodData.ingredients.map((ingredient) => (
+                      <Chip title={ingredient.name} key={ingredient.id} />
+                    ))}
                 </ChipWrapper>
               </FoodInfos>
 
@@ -80,7 +91,7 @@ export function Details() {
                   />
                 ) : (
                   <SmallButton
-                    title={`Incluir ∙ ${priceTest}`}
+                    title={`Incluir ∙ ${foodData.price}`}
                     onClick={handleAddOrders}
                   />
                 )}

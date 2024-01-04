@@ -1,6 +1,6 @@
-import { Container, ContentWrapper } from "./styles";
+import { useState, useEffect } from "react";
 
-import { FiTag } from "react-icons/fi";
+import { Container, ContentWrapper } from "./styles";
 
 import { Header } from "../../components/Header";
 import { CardsSection } from "../../components/CardsSection";
@@ -9,65 +9,37 @@ import { Footer } from "../../components/Footer";
 
 import { Layout } from "../../components/Layout";
 
-import logoSVG from "../../assets/Logo.svg";
+import { api } from "../../services/api";
+import { getAllFoods } from "../../services/foods";
 
 export function Home() {
+  const [foodData, setFoodData] = useState([]);
+
+  useEffect(() => {
+    async function fetchFoods() {
+      const response = await getAllFoods();
+      setFoodData(response.data);
+    }
+
+    fetchFoods();
+  }, []);
+
   return (
     <Container>
       <Header />
       <Layout>
         <ContentWrapper>
           <CardsSection title="Refeições">
-            <Card
-              id={1}
-              icon={FiTag}
-              image={logoSVG}
-              title="Spaguetti Gambe  >"
-              description="Massa fresca com camarões e pesto. "
-              price="10.99"
-            />
-            <Card
-              id={2}
-              icon={FiTag}
-              image={logoSVG}
-              title="Spaguetti Gambe  >"
-              description="Massa fresca com camarões e pesto. "
-              price="10.99"
-            />
-            <Card
-              id={3}
-              icon={FiTag}
-              image={logoSVG}
-              title="Spaguetti Gambe  >"
-              description="Massa fresca com camarões e pesto. "
-              price="10.99"
-            />
-          </CardsSection>
-          <CardsSection title="Refeições">
-            <Card
-              id={1}
-              icon={FiTag}
-              image={logoSVG}
-              title="Spaguetti Gambe  >"
-              description="Massa fresca com camarões e pesto. "
-              price="10.99"
-            />
-            <Card
-              id={2}
-              icon={FiTag}
-              image={logoSVG}
-              title="Spaguetti Gambe  >"
-              description="Massa fresca com camarões e pesto. "
-              price="10.99"
-            />
-            <Card
-              id={3}
-              icon={FiTag}
-              image={logoSVG}
-              title="Spaguetti Gambe  >"
-              description="Massa fresca com camarões e pesto. "
-              price="10.99"
-            />
+            {foodData.map((food) => (
+              <Card
+                key={food.id}
+                id={food.id}
+                image={`${api.defaults.baseURL}/files/${food.image}`}
+                title={`${food.name}  >`}
+                description={food.description}
+                price={food.price}
+              />
+            ))}
           </CardsSection>
         </ContentWrapper>
       </Layout>

@@ -31,6 +31,10 @@ export function Header() {
     navigate("/create");
   }
 
+  function handleHome() {
+    navigate("/");
+  }
+
   function handleSignOut() {
     navigate("/");
     signOut();
@@ -47,6 +51,7 @@ export function Header() {
                 : logoSVG
             }
             alt="Logo"
+            onClick={handleHome}
           />
 
           <InputSearch

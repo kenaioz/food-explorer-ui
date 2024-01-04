@@ -15,6 +15,10 @@ export const NavBar = styled.nav`
 
   display: flex;
   gap: 32px;
+
+  img:hover {
+    cursor: pointer;
+  }
 `;
 
 export const HeaderButton = styled.button`
