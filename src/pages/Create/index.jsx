@@ -33,19 +33,23 @@ import { getAllCategories } from "../../services/categories";
 import { getAllIngredients } from "../../services/ingredients";
 
 export function Create() {
-  const navigate = useNavigate();
-
-  const [image, setImage] = useState("");
   const [imageFile, setImageFile] = useState(null);
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState(0);
-  const [price, setPrice] = useState("");
+  const [foodData, setFoodData] = useState({
+    name: "",
+    category: 0,
+    ingredients: [],
+    price: "",
+    description: "",
+  });
+
+  const [ingredientsData, setIngredientsData] = useState([]);
+  const [categoriesData, setCategoriesData] = useState([]);
+
   const [newIngredientId, setNewIngredientId] = useState(0);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  const [description, setDescription] = useState("");
-  const [ingredientsData, setIngredientsData] = useState([]);
-  const [categoriesData, setCategoriesData] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchIngredients() {
@@ -79,8 +83,10 @@ export function Create() {
       (ingredient) => ingredient.id === newIngredientId
     );
 
+    const updatedingredientsIds = [...ingredients, newIngredientId];
     setSelectedIngredients((prevState) => [...prevState, ingredient]);
     setIngredients([...ingredients, newIngredientId]);
+    updateFormsData("ingredients", updatedingredientsIds);
     setNewIngredientId(0);
   }
 
@@ -89,36 +95,44 @@ export function Create() {
       prevState.filter((ingredient) => ingredient.id !== deleted)
     );
 
-    setIngredients(ingredients.filter((ingredient) => ingredient !== deleted));
+    const filteredIds = ingredients.filter(
+      (ingredient) => ingredient !== deleted
+    );
+    setIngredients(filteredIds);
+
+    updateFormsData("ingredients", filteredIds);
+  }
+
+  function updateFormsData(field, data) {
+    setFoodData({
+      ...foodData,
+      [field]: data,
+    });
   }
 
   async function handleForms() {
-    if (!name) {
+    if (!imageFile) {
+      return alert("Selecione uma imagem");
+    }
+    if (!foodData.name) {
       return alert("Preencha o nome");
     }
-    if (!name) {
-      return alert("Preencha o nome");
-    }
-    if (!category) {
+    if (!foodData.category) {
       return alert("Selecione a categoria");
     }
-    if (!ingredients) {
+    if (!foodData.ingredients) {
       return alert("Selecione os ingredientes");
     }
-    if (!price) {
+    if (!foodData.price) {
       return alert("Preencha o preço");
     }
-    if (!description) {
+    if (!foodData.description) {
       return alert("Preencha a descrição");
     }
 
-    const foodId = await createFood({
-      name,
-      category,
-      ingredients,
-      price,
-      description,
-    });
+    console.log(foodData.ingredients);
+
+    const foodId = await createFood(foodData);
 
     await patchImage({ foodId: foodId.data, imageFile });
     navigate("/");
@@ -153,18 +167,18 @@ export function Create() {
 
                 <Input
                   bigger
-                  id="foodName"
+                  id="name"
                   label="Nome"
                   placeholder="Ex.: Salada Ceasar"
-                  onChange={setName}
+                  onChange={updateFormsData}
                   required
                 />
                 <Dropdown
-                  id="categoriesDropDown"
+                  id="category"
                   label="Categorias"
                   placeholder="Selecione a categoria"
                   categories={categoriesData}
-                  onChange={setCategory}
+                  onChange={updateFormsData}
                 />
               </Row1>
               <Row2>
@@ -179,7 +193,7 @@ export function Create() {
                     />
                   ))}
                   <IngredientSelect
-                    id="IngredientsSelect"
+                    id="ingredients"
                     isNew
                     placeholder="Adicionar"
                     ingredients={ingredientsData}
@@ -189,18 +203,18 @@ export function Create() {
                 </IngredientItems>
 
                 <Input
-                  id="foodPrice"
+                  id="price"
                   label="Preço"
                   placeholder="R$ 00,00"
-                  onChange={setPrice}
+                  onChange={updateFormsData}
                 />
               </Row2>
               <Row3>
                 <TextArea
-                  id="foodDescription"
+                  id="description"
                   label="Descrição"
                   placeholder="Teste Placeholder"
-                  onChange={setDescription}
+                  onChange={updateFormsData}
                 />
               </Row3>
               <Row4>

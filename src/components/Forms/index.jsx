@@ -33,6 +33,7 @@ export function Input({ bigger = false, value, label, onChange, ...rest }) {
           setInputValue(e.target.value);
           onChange(e.target.id, e.target.value);
         }}
+        type={rest.type ? rest.type : "text"}
       />
     </LabelInputWrapper>
   );
@@ -63,10 +64,8 @@ export function TextArea({ label, value, onChange, ...rest }) {
 export function Dropdown({ id, label, categories, onChange, value, ...rest }) {
   const [selectedCategory, setSelectedCategory] = useState(value || "0");
 
-  console.log(selectedCategory);
-
   useEffect(() => {
-    setSelectedCategory(value || "");
+    setSelectedCategory(value || "0");
   }, [value]);
 
   return (

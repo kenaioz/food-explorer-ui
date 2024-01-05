@@ -29,12 +29,14 @@ import { Footer } from "../../components/Footer";
 import { Layout } from "../../components/Layout";
 
 import { api } from "../../services/api";
-import { getIndexFood, updateFood } from "../../services/foods";
+import { getIndexFood, updateFood, patchImage } from "../../services/foods";
 import { getAllCategories } from "../../services/categories";
 import { getAllIngredients } from "../../services/ingredients";
 
 export function Edit() {
+  const [imageFile, setImageFile] = useState(null);
   const [foodData, setFoodData] = useState({});
+
   const [ingredientsData, setIngredientsData] = useState([]);
   const [categoriesData, setCategoriesData] = useState([]);
 
@@ -61,12 +63,14 @@ export function Edit() {
         (ingredient) => ingredient.id
       );
 
-      const modifiedData = {
+      const dataWithIngredients = {
         ...response.data,
         ingredients: arrayIds,
       };
 
-      setFoodData(modifiedData);
+      const { image, ...dataWithoutImage } = dataWithIngredients;
+
+      setFoodData(dataWithoutImage);
       setSelectedIngredients(response.data.ingredients);
       setIngredientsIds(arrayIds);
     }
@@ -83,6 +87,11 @@ export function Edit() {
       }
     }
   }, [foodData]);
+
+  function handleChangeImage(event) {
+    const file = event.target.files[0];
+    setImageFile(file);
+  }
 
   function handleAddIngredient() {
     if (!newIngredientId) {
@@ -125,8 +134,12 @@ export function Edit() {
   }
 
   async function handleForms() {
-    console.log(foodData);
     await updateFood(foodData);
+
+    if (imageFile) {
+      await patchImage({ foodId: foodData.id, imageFile });
+    }
+    navigate("/");
   }
 
   return (
@@ -141,7 +154,20 @@ export function Edit() {
               <legend>Editar Prato</legend>
 
               <Row1>
-                <FileUploader id="imageFile" label="Imagem do prato" />
+                {!imageFile ? (
+                  <FileUploader
+                    id="imageFile"
+                    label="Imagem do prato"
+                    onChange={handleChangeImage}
+                  />
+                ) : (
+                  <FileUploader
+                    id="imageFile"
+                    label="Imagem do prato"
+                    onChange={handleChangeImage}
+                    imageSelected
+                  />
+                )}
                 <Input
                   bigger
                   id="name"

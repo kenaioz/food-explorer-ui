@@ -8,6 +8,13 @@ const createFood = async ({
   description,
 }) => {
   try {
+    console.log({
+      name,
+      category,
+      ingredients,
+      price,
+      description,
+    });
     const response = await api.post("/foods", {
       name,
       category,

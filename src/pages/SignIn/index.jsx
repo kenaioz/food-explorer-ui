@@ -11,13 +11,22 @@ import { Container, Form } from "./styles";
 import LogoSGV from "../../assets/Logo.svg";
 
 export function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [signInData, setSignInData] = useState({
+    email: "",
+    password: "",
+  });
 
   const { signIn } = useAuth();
 
+  function updateSignInData(field, data) {
+    setSignInData({
+      ...signInData,
+      [field]: data,
+    });
+  }
+
   function handleSignIn() {
-    signIn({ email, password });
+    signIn(signInData);
   }
 
   return (
@@ -31,7 +40,7 @@ export function SignIn() {
           label="E-mail"
           placeholder="Exemplo: exemplo@exemplo.com.br"
           type="text"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={updateSignInData}
         />
 
         <Input
@@ -39,7 +48,7 @@ export function SignIn() {
           label="Senha"
           placeholder="No mínimo 6 caracteres"
           type="password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={updateSignInData}
         />
 
         <Button title="Entrar" onClick={handleSignIn} />

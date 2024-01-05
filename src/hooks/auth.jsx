@@ -8,7 +8,6 @@ function AuthProvider({ children }) {
   const [data, setData] = useState({});
 
   async function signIn({ email, password }) {
-    console.log("Teste");
     try {
       const response = await api.post("sessions", { email, password });
       const { token, user } = response.data;
@@ -29,7 +28,6 @@ function AuthProvider({ children }) {
   }
 
   function signOut() {
-    console.log("Teste");
     localStorage.removeItem("@food_explorer:token");
     localStorage.removeItem("@food_explorer:user");
 
