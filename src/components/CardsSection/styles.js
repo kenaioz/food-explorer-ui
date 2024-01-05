@@ -17,4 +17,5 @@ export const Container = styled.div`
 export const CardWrapper = styled.div`
   display: flex;
   gap: 27px;
+  flex-wrap: wrap;
 `;
