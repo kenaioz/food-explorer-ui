@@ -9,6 +9,11 @@ import { Footer } from "../../components/Footer";
 
 import { Layout } from "../../components/Layout";
 
+import { PiCaretLeft, PiCaretRight } from "react-icons/pi";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/swiper-bundle.css";
+
 import { api } from "../../services/api";
 import { getAllFoods } from "../../services/foods";
 
@@ -30,16 +35,24 @@ export function Home() {
       <Layout>
         <ContentWrapper>
           <CardsSection title="Refeições">
-            {foodData.map((food) => (
-              <Card
-                key={food.id}
-                id={food.id}
-                image={`${api.defaults.baseURL}/files/${food.image}`}
-                title={`${food.name}  >`}
-                description={food.description}
-                price={food.price}
-              />
-            ))}
+            <Swiper
+              spaceBetween={27}
+              slidesPerView={"auto"}
+              navigation={true}
+              modules={[Navigation]}
+            >
+              {foodData.map((food) => (
+                <SwiperSlide key={food.id}>
+                  <Card
+                    id={food.id}
+                    image={`${api.defaults.baseURL}/files/${food.image}`}
+                    title={`${food.name} >`}
+                    description={food.description}
+                    price={food.price}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </CardsSection>
         </ContentWrapper>
       </Layout>
