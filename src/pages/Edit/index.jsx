@@ -63,12 +63,12 @@ export function Edit() {
         (ingredient) => ingredient.id
       );
 
-      const dataWithIngredients = {
+      const dataWithIngredientsIds = {
         ...response.data,
         ingredients: arrayIds,
       };
 
-      const { image, ...dataWithoutImage } = dataWithIngredients;
+      const { image, ...dataWithoutImage } = dataWithIngredientsIds;
 
       setFoodData(dataWithoutImage);
       setSelectedIngredients(response.data.ingredients);

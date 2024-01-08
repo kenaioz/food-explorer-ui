@@ -16,15 +16,18 @@ import LogoAdminSVG from "../../assets/LogoAdmin.svg";
 import { useAuth } from "../../hooks/auth";
 import { USER_PROFILE } from "../../utils/roles";
 
+import { useOrders } from "../../hooks/orders";
+
 export function Header() {
   const navigate = useNavigate();
 
   const { signOut, user } = useAuth();
+  const { orders } = useOrders();
 
-  const [ordersLenght, setOrdersLenght] = useState(0);
+  const [ordersLenght, setOrdersLenght] = useState(orders.length || 0);
 
   function handleOrders() {
-    alert("Teste ver pedidos");
+    navigate("/orders");
   }
 
   function handleNewFood() {

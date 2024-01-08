@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Container, CardContent, CardActions } from "./styles";
@@ -11,9 +12,13 @@ import { Quantity } from "../Quantity";
 
 import { useAuth } from "../../hooks/auth";
 import { USER_PROFILE } from "../../utils/roles";
+import { useOrders } from "../../hooks/orders";
 
 export function Card({ id, image, title, description, price }) {
   const { user } = useAuth();
+  const { handleOrders } = useOrders();
+
+  const [quantity, setQuantity] = useState(1);
 
   const navigate = useNavigate();
 
@@ -27,6 +32,11 @@ export function Card({ id, image, title, description, price }) {
 
   function handleFavorities() {
     alert("Teste Favoritos");
+  }
+
+  function handleClick() {
+    const order = { id, image, title, price, quantity };
+    handleOrders(order);
   }
 
   return (
@@ -54,9 +64,9 @@ export function Card({ id, image, title, description, price }) {
       </CardContent>
 
       <CardActions>
-        <Quantity />
+        <Quantity quantity={quantity} setQuantity={setQuantity} />
 
-        <SmallButton title="Incluir" />
+        <SmallButton title="Incluir" onClick={handleClick} />
       </CardActions>
     </Container>
   );

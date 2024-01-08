@@ -8,9 +8,6 @@ export const Container = styled.main`
 export const ContentWrapper = styled.div`
   padding-bottom: 60px;
 
-  .swiper {
-  }
-
   .swiper-slide {
     width: fit-content;
   }

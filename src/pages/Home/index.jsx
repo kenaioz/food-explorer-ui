@@ -9,7 +9,6 @@ import { Footer } from "../../components/Footer";
 
 import { Layout } from "../../components/Layout";
 
-import { PiCaretLeft, PiCaretRight } from "react-icons/pi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/swiper-bundle.css";

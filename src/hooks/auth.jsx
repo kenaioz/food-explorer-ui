@@ -30,6 +30,7 @@ function AuthProvider({ children }) {
   function signOut() {
     localStorage.removeItem("@food_explorer:token");
     localStorage.removeItem("@food_explorer:user");
+    localStorage.removeItem("@food_explorer:orders");
 
     setData({});
   }
