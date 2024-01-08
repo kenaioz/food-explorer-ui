@@ -130,8 +130,6 @@ export function Create() {
       return alert("Preencha a descrição");
     }
 
-    console.log(foodData.ingredients);
-
     const foodId = await createFood(foodData);
 
     await patchImage({ foodId: foodId.data, imageFile });

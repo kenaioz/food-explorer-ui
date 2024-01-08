@@ -8,13 +8,6 @@ const createFood = async ({
   description,
 }) => {
   try {
-    console.log({
-      name,
-      category,
-      ingredients,
-      price,
-      description,
-    });
     const response = await api.post("/foods", {
       name,
       category,
@@ -90,4 +83,22 @@ const getIndexFood = async (id) => {
   }
 };
 
-export { createFood, updateFood, patchImage, getAllFoods, getIndexFood };
+const deleteIndexFood = async (id) => {
+  try {
+    await api.delete(`/foods/${id}`);
+
+    return;
+  } catch (error) {
+    handleApiError(error);
+    return error;
+  }
+};
+
+export {
+  createFood,
+  updateFood,
+  patchImage,
+  getAllFoods,
+  getIndexFood,
+  deleteIndexFood,
+};

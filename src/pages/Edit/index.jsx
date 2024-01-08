@@ -28,8 +28,12 @@ import { Footer } from "../../components/Footer";
 
 import { Layout } from "../../components/Layout";
 
-import { api } from "../../services/api";
-import { getIndexFood, updateFood, patchImage } from "../../services/foods";
+import {
+  getIndexFood,
+  updateFood,
+  patchImage,
+  deleteIndexFood,
+} from "../../services/foods";
 import { getAllCategories } from "../../services/categories";
 import { getAllIngredients } from "../../services/ingredients";
 
@@ -142,6 +146,11 @@ export function Edit() {
     navigate("/");
   }
 
+  function handleDeleteFood() {
+    deleteIndexFood(foodData.id);
+    navigate("/");
+  }
+
   return (
     <Container>
       <Header />
@@ -225,7 +234,11 @@ export function Edit() {
                 />
               </Row3>
               <Row4>
-                <SmallButton title="Excluir prato" secundary />
+                <SmallButton
+                  title="Excluir prato"
+                  secundary
+                  onClick={handleDeleteFood}
+                />
                 <SmallButton title="Salvar alterações" onClick={handleForms} />
               </Row4>
             </FormsFieldset>

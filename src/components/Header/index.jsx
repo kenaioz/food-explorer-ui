@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { FiSearch, FiLogOut } from "react-icons/fi";
@@ -24,7 +24,11 @@ export function Header() {
   const { signOut, user } = useAuth();
   const { orders } = useOrders();
 
-  const [ordersLenght, setOrdersLenght] = useState(orders.length || 0);
+  const [ordersLength, setOrdersLength] = useState(0);
+
+  useEffect(() => {
+    setOrdersLength(orders.length);
+  }, [orders]);
 
   function handleOrders() {
     navigate("/orders");
@@ -69,7 +73,7 @@ export function Header() {
           ) : (
             <HeaderButton type="button" onClick={handleOrders}>
               <PiReceipt />
-              <span>Pedidos ({ordersLenght})</span>
+              <span>Pedidos ({ordersLength})</span>
             </HeaderButton>
           )}
 

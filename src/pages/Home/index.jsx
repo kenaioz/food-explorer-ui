@@ -44,8 +44,8 @@ export function Home() {
                 <SwiperSlide key={food.id}>
                   <Card
                     id={food.id}
-                    image={`${api.defaults.baseURL}/files/${food.image}`}
-                    title={`${food.name} >`}
+                    image={food.image}
+                    title={food.name}
                     description={food.description}
                     price={food.price}
                   />

@@ -14,9 +14,11 @@ import { useAuth } from "../../hooks/auth";
 import { USER_PROFILE } from "../../utils/roles";
 import { useOrders } from "../../hooks/orders";
 
+import { api } from "../../services/api";
+
 export function Card({ id, image, title, description, price }) {
   const { user } = useAuth();
-  const { handleOrders } = useOrders();
+  const { handleNewOrders } = useOrders();
 
   const [quantity, setQuantity] = useState(1);
 
@@ -35,8 +37,8 @@ export function Card({ id, image, title, description, price }) {
   }
 
   function handleClick() {
-    const order = { id, image, title, price, quantity };
-    handleOrders(order);
+    const order = { id, image, name: title, price, quantity };
+    handleNewOrders(order);
   }
 
   return (
@@ -52,10 +54,10 @@ export function Card({ id, image, title, description, price }) {
       )}
 
       <CardContent>
-        <img src={image} alt="Image Food" />
+        <img src={`${api.defaults.baseURL}/files/${image}`} alt="Image Food" />
 
         <a onClick={handleDetails}>
-          <h1>{title}</h1>
+          <h1>{`${title} >`}</h1>
         </a>
 
         <p>{description}</p>
@@ -63,11 +65,13 @@ export function Card({ id, image, title, description, price }) {
         <span>R$ {price}</span>
       </CardContent>
 
-      <CardActions>
-        <Quantity quantity={quantity} setQuantity={setQuantity} />
+      {![USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(user.role) && (
+        <CardActions>
+          <Quantity quantity={quantity} setQuantity={setQuantity} />
 
-        <SmallButton title="Incluir" onClick={handleClick} />
-      </CardActions>
+          <SmallButton title="Incluir" onClick={handleClick} />
+        </CardActions>
+      )}
     </Container>
   );
 }

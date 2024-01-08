@@ -8,12 +8,10 @@ function OrdersProvider({ children }) {
   useEffect(() => {
     const ordersStorage = localStorage.getItem("@food_explorer:orders");
 
-    if (ordersStorage) {
-      setOrders(JSON.parse(ordersStorage));
-    }
+    ordersStorage ? setOrders(JSON.parse(ordersStorage)) : setOrders([]);
   }, []);
 
-  function handleOrders(newOrder) {
+  function handleNewOrders(newOrder) {
     const orderIndex = orders.findIndex((order) => order.id === newOrder.id);
 
     if (orderIndex !== -1) {
@@ -31,10 +29,26 @@ function OrdersProvider({ children }) {
     }
   }
 
+  function handleRemoveOrder(orderId) {
+    const orderExists = orders.some((order) => order.id === orderId);
+
+    if (orderExists) {
+      const updatedOrders = orders.filter((order) => order.id !== orderId);
+
+      setOrders(updatedOrders);
+
+      localStorage.setItem(
+        "@food_explorer:orders",
+        JSON.stringify(updatedOrders)
+      );
+    }
+  }
+
   return (
     <OrdersContext.Provider
       value={{
-        handleOrders,
+        handleNewOrders,
+        handleRemoveOrder,
         orders: orders,
       }}
     >
