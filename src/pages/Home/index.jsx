@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Container, ContentWrapper } from "./styles";
+import { Container, ContentWrapper, HomeBanner } from "./styles";
 
 import { Header } from "../../components/Header";
 import { CardsSection } from "../../components/CardsSection";
@@ -9,11 +9,12 @@ import { Footer } from "../../components/Footer";
 
 import { Layout } from "../../components/Layout";
 
+import Banner from "../../assets/HomeBanner.svg";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 
-import { api } from "../../services/api";
 import { getAllFoods } from "../../services/foods";
 
 export function Home() {
@@ -33,6 +34,9 @@ export function Home() {
       <Header />
       <Layout>
         <ContentWrapper>
+          <HomeBanner>
+            <img src={Banner} alt="Banner" />
+          </HomeBanner>
           <CardsSection title="Refeições">
             <Swiper
               spaceBetween={27}

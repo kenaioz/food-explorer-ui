@@ -8,6 +8,10 @@ export const Container = styled.main`
 export const ContentWrapper = styled.div`
   padding-bottom: 60px;
 
+  .swiper {
+    width: 100%;
+  }
+
   .swiper-slide {
     width: fit-content;
   }
@@ -45,4 +49,10 @@ export const ContentWrapper = styled.div`
   .swiper-button-disabled {
     background: none;
   }
+`;
+
+export const HomeBanner = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
