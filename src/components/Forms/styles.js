@@ -87,27 +87,18 @@ export const ContainerItem = styled.div`
   justify-content: center;
   gap: 8px;
 
-  background-color: ${({ theme, $isnew }) =>
-    $isnew ? "transparent" : theme.COLORS.LIGHT_600};
+  background-color: ${({ theme }) => theme.COLORS.LIGHT_600};
   color: ${({ theme }) => theme.COLORS.LIGHT_500};
 
-  border: ${({ theme, $isnew }) =>
-    $isnew ? `1px dashed ${theme.COLORS.LIGHT_500}` : "none"};
+  border: none;
 
   border-radius: 8px;
   padding: 10px 16px;
 
-  .button-delete {
-    color: ${({ theme }) => theme.COLORS.LIGHT_100};
-  }
-
-  .button-add {
-    color: ${({ theme }) => theme.COLORS.LIGHT_500};
-  }
-
   > button {
     border: none;
     background: none;
+    color: ${({ theme }) => theme.COLORS.LIGHT_100};
   }
 
   > input {

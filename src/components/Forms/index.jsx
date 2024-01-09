@@ -101,23 +101,18 @@ export function IngredientItems({ bigger = false, children, label }) {
   );
 }
 
-export function IngredientItem({ isNew = false, value, onClick, ...rest }) {
+export function IngredientItem({ value, onClick }) {
   return (
-    <ContainerItem $isnew={isNew}>
+    <ContainerItem>
       <input
         type="text"
         value={value}
-        readOnly={!isNew}
+        readOnly={true}
         placeholder="Adicionar"
-        size={isNew ? 8 : value.length}
-        {...rest}
+        size={value.length + 1}
       />
-      <button
-        type="button"
-        onClick={onClick}
-        className={isNew ? "button-add" : "button-delete"}
-      >
-        {isNew ? <FiPlus size={12} /> : <FiX size={12} />}
+      <button type="button" onClick={onClick}>
+        <FiX size={12} />
       </button>
     </ContainerItem>
   );

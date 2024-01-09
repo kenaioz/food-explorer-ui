@@ -9,4 +9,15 @@ const createUser = async (name, email, password) => {
   }
 };
 
-export { createUser };
+const listAllUsers = async () => {
+  try {
+    const response = await api.get("/users");
+
+    return response;
+  } catch (error) {
+    handleApiError(error);
+    return error;
+  }
+};
+
+export { createUser, listAllUsers };
