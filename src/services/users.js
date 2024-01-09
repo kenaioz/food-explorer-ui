@@ -1,8 +1,10 @@
 import { api, handleApiError } from "./api";
 
-const createUser = async (name, email, password) => {
+const createUser = async (userData) => {
   try {
-    await api.post("/users", { name, email, password });
+    await api.post("/users", userData);
+
+    return;
   } catch (error) {
     handleApiError(error);
     return error;

@@ -138,17 +138,34 @@ export function Edit() {
   }
 
   async function handleForms() {
-    await updateFood(foodData);
-
-    if (imageFile) {
-      await patchImage({ foodId: foodData.id, imageFile });
+    try {
+      await updateFood(foodData);
+      if (imageFile) {
+        await patchImage({ foodId: foodData.id, imageFile });
+      }
+      alert("Prato atualizado com sucesso!");
+      navigate("/");
+    } catch (error) {
+      if (error.response) {
+        return alert(error.response.data.message);
+      } else {
+        return alert("Não foi possível atualizar o prato.");
+      }
     }
-    navigate("/");
   }
 
-  function handleDeleteFood() {
-    deleteIndexFood(foodData.id);
-    navigate("/");
+  async function handleDeleteFood() {
+    try {
+      await deleteIndexFood(foodData.id);
+      alert("Prato excluído com sucesso!");
+      navigate("/");
+    } catch (error) {
+      if (error.response) {
+        return alert(error.response.data.message);
+      } else {
+        return alert("Não foi possível excluir o prato.");
+      }
+    }
   }
 
   return (

@@ -130,10 +130,18 @@ export function Create() {
       return alert("Preencha a descrição");
     }
 
-    const foodId = await createFood(foodData);
-
-    await patchImage({ foodId: foodId.data, imageFile });
-    navigate("/");
+    try {
+      const foodId = await createFood(foodData);
+      await patchImage({ foodId: foodId.data, imageFile });
+      alert("Prato cadastrado com sucesso!");
+      navigate("/");
+    } catch (error) {
+      if (error.response) {
+        return alert(error.response.data.message);
+      } else {
+        return alert("Não foi possível cadastrar o prato.");
+      }
+    }
   }
 
   return (

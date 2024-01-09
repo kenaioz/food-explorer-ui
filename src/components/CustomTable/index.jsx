@@ -76,9 +76,20 @@ export function CustomTable({ data, headers }) {
         "Os dois campos de senha precisam estar preenchidos ou vazios"
       );
     }
-    await updateUser(userData);
-    window.location.reload(false);
+
+    try {
+      await updateUser(userData);
+      alert("Usuário atualizado com sucesso!");
+      window.location.reload(false);
+    } catch (error) {
+      if (error.response) {
+        return alert(error.response.data.message);
+      } else {
+        return alert("Não foi possível atualizar o usuário.");
+      }
+    }
   }
+
   async function handleDelete() {
     await deleteUser(userData.id);
     window.location.reload(false);
@@ -121,7 +132,6 @@ export function CustomTable({ data, headers }) {
                 id="role"
                 label="Nova role"
                 placeholder="Selecione a nova role do usuário"
-                value={role}
                 categories={roles}
                 onChange={updateUserRole}
               />
@@ -129,12 +139,14 @@ export function CustomTable({ data, headers }) {
             <PasswordRow>
               <Input
                 id="old_password"
+                type="password"
                 label="Senha antiga"
                 placeholder="Digite a senha antiga"
                 onChange={updateUserData}
               />
               <Input
                 id="new_password"
+                type="password"
                 label="Nova senha"
                 placeholder="Digite a nova senha"
                 onChange={updateUserData}

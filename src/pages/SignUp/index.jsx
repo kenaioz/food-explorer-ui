@@ -14,15 +14,32 @@ export function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  function updateUserData(field, data) {
+    setUserData({
+      ...userData,
+      [field]: data,
+    });
+  }
+
   const navigate = useNavigate();
 
   async function handleSignUp() {
-    if (!name || !email || !password) {
+    if (!userData.name || !userData.email || !userData.password) {
       return alert("Preencha todos os campos!");
     }
 
+    if (!userData.password.length >= 6) {
+      return alert("A senha deve ter pelo menos 6 caracteres");
+    }
+
     try {
-      await createUser(name, email, password);
+      await createUser(userData);
       alert("Cadastro realizado com sucesso!");
       navigate("/");
     } catch (error) {
@@ -45,7 +62,7 @@ export function SignUp() {
           label="Nome"
           placeholder="Exemplo: Maria da Silva"
           type="text"
-          onChange={(e) => setName(e.target.value)}
+          onChange={updateUserData}
         />
 
         <Input
@@ -53,7 +70,7 @@ export function SignUp() {
           label="E-mail"
           placeholder="Exemplo: exemplo@exemplo.com.br"
           type="text"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={updateUserData}
         />
 
         <Input
@@ -61,7 +78,7 @@ export function SignUp() {
           label="Senha"
           placeholder="No mínimo 6 caracteres"
           type="password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={updateUserData}
         />
 
         <Button title="Criar conta" onClick={handleSignUp} />
