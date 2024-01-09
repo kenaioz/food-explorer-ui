@@ -13,9 +13,3 @@ export const Container = styled.div`
     margin-bottom: 23px;
   }
 `;
-
-export const CardWrapper = styled.div`
-  display: flex;
-  gap: 27px;
-  flex-wrap: wrap;
-`;
