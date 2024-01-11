@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { Container, ContentWrapper, HomeBanner } from "./styles";
 
@@ -19,9 +20,10 @@ import { getAllFoods } from "../../services/foods";
 import { getAllCategories } from "../../services/categories";
 
 export function Home() {
+  const [searchParams] = useSearchParams();
+
   const [query, setQuery] = useState("");
   const [foodData, setFoodData] = useState([]);
-  const [categoriesData, setCategoriesData] = useState([]);
   const [filteredFood, setFilteredFood] = useState({});
   const [searchedFood, setSearchedFood] = useState([]);
 
@@ -30,11 +32,14 @@ export function Home() {
       const foodResponse = await getAllFoods();
       const categoriesResponse = await getAllCategories();
 
-      if (foodResponse && categoriesResponse) {
-        setFoodData(foodResponse.data);
-        setCategoriesData(categoriesResponse.data);
+      setFoodData(foodResponse.data);
 
-        filterFoodByCategory(foodResponse.data, categoriesResponse.data);
+      filterFoodByCategory(foodResponse.data, categoriesResponse.data);
+
+      console.log("teste render", searchParams.get("search"));
+
+      if (searchParams.get("search")) {
+        setQuery(searchParams.get("search"));
       }
     }
 
@@ -44,6 +49,8 @@ export function Home() {
   useEffect(() => {
     async function searchFood() {
       if (query && foodData) {
+        console.log("query", query);
+        console.log("foodData", foodData);
         const searchResult = foodData.filter((food) =>
           food.name.toLowerCase().includes(query.toLowerCase())
         );
@@ -84,7 +91,7 @@ export function Home() {
 
   return (
     <Container>
-      <Header value={query} onChange={setQuery} />
+      <Header onChange={setQuery} />
       <Layout>
         <ContentWrapper>
           {query ? (

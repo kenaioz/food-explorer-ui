@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 
 import { FiSearch, FiLogOut } from "react-icons/fi";
 import { PiReceipt } from "react-icons/pi";
@@ -19,10 +19,13 @@ import { USER_PROFILE } from "../../utils/roles";
 
 import { useOrders } from "../../hooks/orders";
 
-export function Header({ value, onChange }) {
+export function Header({ onChange }) {
+  const [, setSearchParams] = useSearchParams();
+
   const [ordersLength, setOrdersLength] = useState(0);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { signOut, user } = useAuth();
   const { orders } = useOrders();
@@ -40,6 +43,10 @@ export function Header({ value, onChange }) {
   }
 
   function handleHome() {
+    if (location.pathname == "/") {
+      setSearchParams("");
+      return window.location.reload();
+    }
     navigate("/");
   }
 
@@ -66,7 +73,7 @@ export function Header({ value, onChange }) {
             onClick={handleHome}
           />
 
-          <InputSearch icon={FiSearch} value={value} onChange={onChange} />
+          <InputSearch icon={FiSearch} onChange={onChange} />
 
           {[USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(user.role) ? (
             <>
@@ -75,7 +82,7 @@ export function Header({ value, onChange }) {
               </HeaderButton>
 
               <HeaderCircleButton type="button" onClick={handleAdmin}>
-                <TbUserEdit size={20} />
+                <TbUserEdit size={24} />
               </HeaderCircleButton>
             </>
           ) : (

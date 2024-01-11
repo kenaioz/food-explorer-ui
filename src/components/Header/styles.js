@@ -55,7 +55,7 @@ export const HeaderButton = styled.button`
 `;
 
 export const HeaderCircleButton = styled.button`
-  height: fit-content;
+  height: 100%;
 
   background-color: ${({ theme }) => theme.COLORS.TINT_TOMATO_100};
   color: ${({ theme }) => theme.COLORS.LIGHT_100};
