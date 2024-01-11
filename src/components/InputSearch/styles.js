@@ -27,7 +27,7 @@ export const Container = styled.div`
   }
 
   > svg {
-    margin-left: 100px;
+    margin-left: 145px;
     color: ${({ theme }) => theme.COLORS.GRAY_600};
   }
 `;

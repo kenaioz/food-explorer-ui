@@ -10,10 +10,6 @@ import { Button } from "../../components/Button";
 import LogoSGV from "../../assets/Logo.svg";
 
 export function SignUp() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const [userData, setUserData] = useState({
     name: "",
     email: "",

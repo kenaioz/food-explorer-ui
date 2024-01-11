@@ -6,7 +6,7 @@ export const Container = styled.main`
 `;
 
 export const ContentWrapper = styled.div`
-  padding-bottom: 60px;
+  padding-bottom: 100px;
 
   .swiper {
     width: 100%;

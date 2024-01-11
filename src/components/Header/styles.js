@@ -14,6 +14,8 @@ export const NavBar = styled.nav`
   width: 100%;
 
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 32px;
 
   img:hover {
@@ -46,6 +48,22 @@ export const HeaderButton = styled.button`
     font-weight: 500;
     line-height: 24px;
   }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+`;
+
+export const HeaderCircleButton = styled.button`
+  height: fit-content;
+
+  background-color: ${({ theme }) => theme.COLORS.TINT_TOMATO_100};
+  color: ${({ theme }) => theme.COLORS.LIGHT_100};
+
+  border: 0;
+  padding: 10px;
+
+  border-radius: 50%;
 
   &:disabled {
     opacity: 0.5;

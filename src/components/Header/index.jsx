@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 import { FiSearch, FiLogOut } from "react-icons/fi";
 import { PiReceipt } from "react-icons/pi";
+import { TbUserEdit } from "react-icons/tb";
 
-import { Container, NavBar, HeaderButton } from "./styles";
+import { Container, NavBar, HeaderButton, HeaderCircleButton } from "./styles";
 
 import { Layout } from "../Layout";
 import { ButtonIcon } from "../ButtonIcon";
@@ -18,13 +19,13 @@ import { USER_PROFILE } from "../../utils/roles";
 
 import { useOrders } from "../../hooks/orders";
 
-export function Header() {
+export function Header({ value, onChange }) {
+  const [ordersLength, setOrdersLength] = useState(0);
+
   const navigate = useNavigate();
 
   const { signOut, user } = useAuth();
   const { orders } = useOrders();
-
-  const [ordersLength, setOrdersLength] = useState(0);
 
   useEffect(() => {
     setOrdersLength(orders.length);
@@ -40,6 +41,10 @@ export function Header() {
 
   function handleHome() {
     navigate("/");
+  }
+
+  function handleAdmin() {
+    navigate("/admin");
   }
 
   function handleSignOut() {
@@ -61,15 +66,18 @@ export function Header() {
             onClick={handleHome}
           />
 
-          <InputSearch
-            icon={FiSearch}
-            placeholder="Busque por pratos ou ingredientes"
-          />
+          <InputSearch icon={FiSearch} value={value} onChange={onChange} />
 
           {[USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(user.role) ? (
-            <HeaderButton type="button" onClick={handleNewFood}>
-              <span>Novo Prato</span>
-            </HeaderButton>
+            <>
+              <HeaderButton type="button" onClick={handleNewFood}>
+                <span>Novo Prato</span>
+              </HeaderButton>
+
+              <HeaderCircleButton type="button" onClick={handleAdmin}>
+                <TbUserEdit size={20} />
+              </HeaderCircleButton>
+            </>
           ) : (
             <HeaderButton type="button" onClick={handleOrders}>
               <PiReceipt />

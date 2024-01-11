@@ -16,47 +16,171 @@ import { Navigation } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 
 import { getAllFoods } from "../../services/foods";
+import { getAllCategories } from "../../services/categories";
 
 export function Home() {
+  const [query, setQuery] = useState("");
   const [foodData, setFoodData] = useState([]);
+  const [categoriesData, setCategoriesData] = useState([]);
+  const [filteredFood, setFilteredFood] = useState({});
+  const [searchedFood, setSearchedFood] = useState([]);
 
   useEffect(() => {
-    async function fetchFoods() {
-      const response = await getAllFoods();
-      setFoodData(response.data);
+    async function fetchFoodAndCategories() {
+      const foodResponse = await getAllFoods();
+      const categoriesResponse = await getAllCategories();
+
+      if (foodResponse && categoriesResponse) {
+        setFoodData(foodResponse.data);
+        setCategoriesData(categoriesResponse.data);
+
+        filterFoodByCategory(foodResponse.data, categoriesResponse.data);
+      }
     }
 
-    fetchFoods();
+    fetchFoodAndCategories();
   }, []);
+
+  useEffect(() => {
+    async function searchFood() {
+      if (query && foodData) {
+        const searchResult = foodData.filter((food) =>
+          food.name.toLowerCase().includes(query.toLowerCase())
+        );
+
+        if (searchResult.length === 0) {
+          const searchByIngredients = foodData.filter((food) => {
+            const result = food.description
+              .toLowerCase()
+              .includes(query.toLowerCase());
+
+            return result;
+          });
+
+          setSearchedFood(searchByIngredients);
+        } else {
+          setSearchedFood(searchResult);
+        }
+      }
+    }
+
+    searchFood();
+  }, [query]);
+
+  function filterFoodByCategory(foodData, categoriesData) {
+    const filteredFoodData = [];
+
+    categoriesData.forEach((category) => {
+      filteredFoodData[category.name] = [];
+    });
+
+    foodData.forEach((food) => {
+      const categoryName = food.category.name;
+      filteredFoodData[categoryName].push(food);
+    });
+
+    setFilteredFood(filteredFoodData);
+  }
 
   return (
     <Container>
-      <Header />
+      <Header value={query} onChange={setQuery} />
       <Layout>
         <ContentWrapper>
-          <HomeBanner>
-            <img src={Banner} alt="Banner" />
-          </HomeBanner>
-          <CardsSection title="Refeições">
-            <Swiper
-              spaceBetween={27}
-              slidesPerView={"auto"}
-              navigation={true}
-              modules={[Navigation]}
-            >
-              {foodData.map((food) => (
-                <SwiperSlide key={food.id}>
-                  <Card
-                    id={food.id}
-                    image={food.image}
-                    title={food.name}
-                    description={food.description}
-                    price={food.price}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </CardsSection>
+          {query ? (
+            <CardsSection title="Pesquisa">
+              <Swiper
+                spaceBetween={27}
+                slidesPerView={"auto"}
+                navigation={true}
+                modules={[Navigation]}
+              >
+                {searchedFood &&
+                  searchedFood.map((food) => (
+                    <SwiperSlide key={food.id}>
+                      <Card
+                        id={food.id}
+                        image={food.image}
+                        title={food.name}
+                        description={food.description}
+                        price={food.price}
+                      />
+                    </SwiperSlide>
+                  ))}
+              </Swiper>
+            </CardsSection>
+          ) : (
+            <>
+              <HomeBanner>
+                <img src={Banner} alt="Banner" />
+              </HomeBanner>
+              <CardsSection title="Refeições">
+                <Swiper
+                  spaceBetween={27}
+                  slidesPerView={"auto"}
+                  navigation={true}
+                  modules={[Navigation]}
+                >
+                  {filteredFood["Refeições"] &&
+                    filteredFood["Refeições"].map((food) => (
+                      <SwiperSlide key={food.id}>
+                        <Card
+                          id={food.id}
+                          image={food.image}
+                          title={food.name}
+                          description={food.description}
+                          price={food.price}
+                        />
+                      </SwiperSlide>
+                    ))}
+                </Swiper>
+              </CardsSection>
+
+              <CardsSection title="Sobremesa">
+                <Swiper
+                  spaceBetween={27}
+                  slidesPerView={"auto"}
+                  navigation={true}
+                  modules={[Navigation]}
+                >
+                  {filteredFood["Sobremesas"] &&
+                    filteredFood["Sobremesas"].map((food) => (
+                      <SwiperSlide key={food.id}>
+                        <Card
+                          id={food.id}
+                          image={food.image}
+                          title={food.name}
+                          description={food.description}
+                          price={food.price}
+                        />
+                      </SwiperSlide>
+                    ))}
+                </Swiper>
+              </CardsSection>
+
+              <CardsSection title="Bebidas">
+                <Swiper
+                  spaceBetween={27}
+                  slidesPerView={"auto"}
+                  navigation={true}
+                  modules={[Navigation]}
+                >
+                  {filteredFood["Bebidas"] &&
+                    filteredFood["Bebidas"].map((food) => (
+                      <SwiperSlide key={food.id}>
+                        <Card
+                          id={food.id}
+                          image={food.image}
+                          title={food.name}
+                          description={food.description}
+                          price={food.price}
+                        />
+                      </SwiperSlide>
+                    ))}
+                </Swiper>
+              </CardsSection>
+            </>
+          )}
         </ContentWrapper>
       </Layout>
       <Footer />

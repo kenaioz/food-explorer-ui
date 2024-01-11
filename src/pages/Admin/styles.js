@@ -6,5 +6,5 @@ export const Container = styled.main`
 `;
 
 export const ContentWrapper = styled.div`
-  padding-bottom: 120px;
+  padding-bottom: 100px;
 `;

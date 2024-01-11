@@ -35,7 +35,6 @@ const deleteUser = async (id) => {
 
 const updateUser = async (userData) => {
   try {
-    console.log(userData);
     await api.patch("/users", userData);
 
     return;

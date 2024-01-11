@@ -1,20 +1,8 @@
 import { api, handleApiError } from "./api";
 
-const createFood = async ({
-  name,
-  category,
-  ingredients,
-  price,
-  description,
-}) => {
+const createFood = async (foodData) => {
   try {
-    const response = await api.post("/foods", {
-      name,
-      category,
-      ingredients,
-      price,
-      description,
-    });
+    const response = await api.post("/foods", foodData);
 
     return response;
   } catch (error) {
@@ -23,23 +11,9 @@ const createFood = async ({
   }
 };
 
-const updateFood = async ({
-  id,
-  name,
-  category,
-  ingredients,
-  price,
-  description,
-}) => {
+const updateFood = async (foodData) => {
   try {
-    await api.put(`/foods`, {
-      id,
-      name,
-      category,
-      ingredients,
-      price,
-      description,
-    });
+    await api.put(`/foods`, foodData);
 
     return;
   } catch (error) {
