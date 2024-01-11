@@ -36,8 +36,6 @@ export function Home() {
 
       filterFoodByCategory(foodResponse.data, categoriesResponse.data);
 
-      console.log("teste render", searchParams.get("search"));
-
       if (searchParams.get("search")) {
         setQuery(searchParams.get("search"));
       }
@@ -49,8 +47,6 @@ export function Home() {
   useEffect(() => {
     async function searchFood() {
       if (query && foodData) {
-        console.log("query", query);
-        console.log("foodData", foodData);
         const searchResult = foodData.filter((food) =>
           food.name.toLowerCase().includes(query.toLowerCase())
         );
