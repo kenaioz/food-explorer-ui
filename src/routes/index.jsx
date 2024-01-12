@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { AdminRoutes } from "./admin.routes";
@@ -8,8 +9,18 @@ import { AuthRoutes } from "./auth.routes";
 import { useAuth } from "../hooks/auth";
 import { USER_PROFILE } from "../utils/roles";
 
+import { api } from "../services/api";
+
 export function Routes() {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
+
+  useEffect(() => {
+    api.get("/users/validation").catch((error) => {
+      if (error.response.status === 401) {
+        signOut();
+      }
+    });
+  }, []);
 
   // prettier-ignore
   function AppRoutes() {

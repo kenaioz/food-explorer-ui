@@ -44,4 +44,5 @@ const updateUser = async (userData) => {
   }
 };
 
+
 export { createUser, listAllUsers, deleteUser, updateUser };
