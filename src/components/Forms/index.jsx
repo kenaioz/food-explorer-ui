@@ -14,7 +14,14 @@ import {
 
 import { FiPlus, FiX, FiUpload, FiCheck } from "react-icons/fi";
 
-export function Input({ bigger = false, value, label, onChange, ...rest }) {
+export function Input({
+  bigger = false,
+  value,
+  label,
+  onChange,
+  onKeyDown,
+  ...rest
+}) {
   const [inputValue, setInputValue] = useState(value || "");
 
   useEffect(() => {
@@ -34,6 +41,7 @@ export function Input({ bigger = false, value, label, onChange, ...rest }) {
           onChange(e.target.id, e.target.value);
         }}
         type={rest.type ? rest.type : "text"}
+        onKeyDown={onKeyDown}
       />
     </LabelInputWrapper>
   );

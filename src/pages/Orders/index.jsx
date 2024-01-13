@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import { Container, ContentWrapper } from "./styles";
 
 import { Header } from "../../components/Header";
@@ -17,13 +19,32 @@ import { useOrders } from "../../hooks/orders";
 export function Orders() {
   const { orders } = useOrders();
 
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    async function calcTotalPrice() {
+      orders.forEach((order) => {
+        const orderTotal =
+          order.quantity > 1
+            ? Number((order.price * order.quantity).toFixed(2))
+            : Number(order.price.toFixed(2));
+
+        setTotalPrice((prevState) =>
+          Number((prevState + orderTotal).toFixed(2))
+        );
+      });
+    }
+    setTotalPrice(0);
+    calcTotalPrice();
+  }, [orders]);
+
   return (
     <Container>
       <Header />
       <Layout>
         <ContentWrapper>
           <BackWrapper />
-          <CardsSection title="Pedidos - (Apenas Exibição)">
+          <CardsSection title={`Pedidos - Total: R$ ${totalPrice}`}>
             <Swiper
               spaceBetween={27}
               slidesPerView={"auto"}

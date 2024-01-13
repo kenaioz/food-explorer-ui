@@ -19,6 +19,7 @@ import { Footer } from "../../components/Footer";
 
 import { Layout } from "../../components/Layout";
 
+import { useOrders } from "../../hooks/orders";
 import { useAuth } from "../../hooks/auth";
 import { USER_PROFILE } from "../../utils/roles";
 
@@ -26,12 +27,15 @@ import { api } from "../../services/api";
 import { getIndexFood } from "../../services/foods";
 
 export function Details() {
+  const { user } = useAuth();
+  const { handleNewOrders } = useOrders();
+
+  const [quantity, setQuantity] = useState(1);
+
   const [foodData, setFoodData] = useState({});
 
   const navigate = useNavigate();
   const params = useParams();
-
-  const { user } = useAuth();
 
   useEffect(() => {
     async function fetchFood() {
@@ -43,7 +47,15 @@ export function Details() {
   }, []);
 
   function handleAddOrders() {
-    alert("Adicionar ao pedido");
+    const order = {
+      id: foodData.id,
+      image: foodData.image,
+      name: foodData.name,
+      price: foodData.price,
+      quantity,
+    };
+    handleNewOrders(order);
+    alert("Pedido adicionado");
   }
 
   function handleEdit(id) {
@@ -80,7 +92,7 @@ export function Details() {
               </FoodInfos>
 
               <FoodActions>
-                <Quantity></Quantity>
+                <Quantity quantity={quantity} setQuantity={setQuantity} />
 
                 {[USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(
                   user.role

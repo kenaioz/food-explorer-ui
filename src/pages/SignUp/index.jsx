@@ -30,7 +30,7 @@ export function SignUp() {
       return alert("Preencha todos os campos!");
     }
 
-    if (!userData.password.length >= 6) {
+    if (userData.password.length < 6) {
       return alert("A senha deve ter pelo menos 6 caracteres");
     }
 

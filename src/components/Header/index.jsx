@@ -3,9 +3,9 @@ import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 
 import { FiSearch, FiLogOut } from "react-icons/fi";
 import { PiReceipt } from "react-icons/pi";
-import { TbUserEdit } from "react-icons/tb";
+import { IoMdSettings } from "react-icons/io";
 
-import { Container, NavBar, HeaderButton, HeaderCircleButton } from "./styles";
+import { Container, NavBar, HeaderButton } from "./styles";
 
 import { Layout } from "../Layout";
 import { ButtonIcon } from "../ButtonIcon";
@@ -81,9 +81,10 @@ export function Header({ onChange }) {
                 <span>Novo Prato</span>
               </HeaderButton>
 
-              <HeaderCircleButton type="button" onClick={handleAdmin}>
-                <TbUserEdit size={24} />
-              </HeaderCircleButton>
+              <HeaderButton type="button" onClick={handleAdmin}>
+                <IoMdSettings />
+                <span>Configurações</span>
+              </HeaderButton>
             </>
           ) : (
             <HeaderButton type="button" onClick={handleOrders}>

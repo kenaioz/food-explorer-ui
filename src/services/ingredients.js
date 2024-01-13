@@ -11,4 +11,15 @@ const getAllIngredients = async () => {
   }
 };
 
-export { getAllIngredients };
+const createNewIngredients = async (newIngredients) => {
+  try {
+    await api.post("/ingredients", newIngredients);
+
+    return;
+  } catch (error) {
+    handleApiError(error);
+    return error;
+  }
+};
+
+export { getAllIngredients, createNewIngredients };

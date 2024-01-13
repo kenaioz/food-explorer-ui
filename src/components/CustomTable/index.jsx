@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { FormsFieldset, PasswordRow, ActionRow } from "./styles";
 import { GoPencil } from "react-icons/go";
@@ -19,6 +19,8 @@ import { ButtonIcon } from "../ButtonIcon";
 import { SmallButton } from "../SmallButton";
 import { Input, Dropdown } from "../Forms";
 
+import { USER_PROFILE } from "../../utils/roles";
+
 import { deleteUser, updateUser } from "../../services/users";
 
 const cellStyles = {
@@ -29,13 +31,28 @@ const cellStyles = {
 export function CustomTable({ data, headers }) {
   const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState({});
-  const [role, setRole] = useState("0");
+  const [currentRole, setCurrentRole] = useState("");
+  const [roleOptions, setRoleOptions] = useState([]);
 
-  const roles = [
-    { id: 1, name: "admin" },
-    { id: 2, name: "editor" },
-    { id: 3, name: "customer" },
-  ];
+  useEffect(() => {
+    async function generateDropSownOptions() {
+      const roles = [];
+
+      const userProfileValues = Object.values(USER_PROFILE);
+
+      for (let i = 0; i < userProfileValues.length; i++) {
+        const userProfile = userProfileValues[i];
+        roles.push({
+          id: i + 1,
+          name: userProfile,
+        });
+      }
+
+      setRoleOptions(roles);
+    }
+
+    generateDropSownOptions();
+  }, []);
 
   const handleOpen = (userData) => {
     setOpen(true);
@@ -45,6 +62,8 @@ export function CustomTable({ data, headers }) {
       email: userData.email,
       role: userData.role,
     });
+
+    setCurrentRole(userData.role);
   };
   const handleClose = () => setOpen(false);
 
@@ -56,7 +75,7 @@ export function CustomTable({ data, headers }) {
   }
 
   function updateUserRole(field, data) {
-    const { name } = roles.find((role) => role.id == data);
+    const { name } = roleOptions.find((role) => role.id == data);
 
     updateUserData(field, name);
   }
@@ -113,6 +132,7 @@ export function CustomTable({ data, headers }) {
         <Box sx={ModalStyle}>
           <FormsFieldset>
             <legend>Editar usuário</legend>
+
             <Input
               id="name"
               label="Nome"
@@ -127,12 +147,12 @@ export function CustomTable({ data, headers }) {
               value={userData.email}
               onChange={updateUserData}
             />
-            {userData.role !== "admin" && (
+            {![USER_PROFILE.ADMIN].includes(currentRole) && (
               <Dropdown
                 id="role"
                 label="Nova role"
                 placeholder="Selecione a nova role do usuário"
-                categories={roles}
+                categories={roleOptions}
                 onChange={updateUserRole}
               />
             )}
@@ -154,7 +174,7 @@ export function CustomTable({ data, headers }) {
             </PasswordRow>
 
             <ActionRow>
-              {userData.role !== "admin" && (
+              {![USER_PROFILE.ADMIN].includes(currentRole) && (
                 <SmallButton title="Excluir" secundary onClick={handleDelete} />
               )}
 

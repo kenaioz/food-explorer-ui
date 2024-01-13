@@ -53,19 +53,3 @@ export const HeaderButton = styled.button`
     opacity: 0.5;
   }
 `;
-
-export const HeaderCircleButton = styled.button`
-  height: 100%;
-
-  background-color: ${({ theme }) => theme.COLORS.TINT_TOMATO_100};
-  color: ${({ theme }) => theme.COLORS.LIGHT_100};
-
-  border: 0;
-  padding: 10px;
-
-  border-radius: 50%;
-
-  &:disabled {
-    opacity: 0.5;
-  }
-`;

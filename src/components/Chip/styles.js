@@ -13,4 +13,6 @@ export const ContainerChip = styled.div`
 export const ContainerWrapper = styled.div`
   display: flex;
   gap: 12px;
+
+  flex-wrap: wrap;
 `;

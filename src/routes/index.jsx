@@ -15,11 +15,13 @@ export function Routes() {
   const { user, signOut } = useAuth();
 
   useEffect(() => {
-    api.get("/users/validation").catch((error) => {
-      if (error.response.status === 401) {
-        signOut();
-      }
-    });
+    if (api.defaults.headers.common["Authorization"]) {
+      api.get("/users/validation").catch((error) => {
+        if (error.response.status === 401) {
+          signOut();
+        }
+      });
+    }
   }, []);
 
   // prettier-ignore

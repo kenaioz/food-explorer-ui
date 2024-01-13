@@ -10,9 +10,9 @@ import { SmallButton } from "../SmallButton";
 import { ButtonIcon } from "../ButtonIcon";
 import { Quantity } from "../Quantity";
 
+import { useOrders } from "../../hooks/orders";
 import { useAuth } from "../../hooks/auth";
 import { USER_PROFILE } from "../../utils/roles";
-import { useOrders } from "../../hooks/orders";
 
 import { api } from "../../services/api";
 
@@ -33,10 +33,10 @@ export function Card({ id, image, title, description, price }) {
   }
 
   function handleFavorities() {
-    alert("Teste Favoritos");
+    alert("Favoritos não está funcionando mas será adicionado em breve");
   }
 
-  function handleClick() {
+  function handleAddOrders() {
     const order = { id, image, name: title, price, quantity };
     handleNewOrders(order);
   }
@@ -69,7 +69,7 @@ export function Card({ id, image, title, description, price }) {
         <CardActions>
           <Quantity quantity={quantity} setQuantity={setQuantity} />
 
-          <SmallButton title="Incluir" onClick={handleClick} />
+          <SmallButton title="Incluir" onClick={handleAddOrders} />
         </CardActions>
       )}
     </Container>

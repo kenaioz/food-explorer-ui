@@ -25,8 +25,26 @@ export function SignIn() {
     });
   }
 
-  function handleSignIn() {
-    signIn(signInData);
+  function handleKeyPress(e) {
+    if (e.key === "Enter") {
+      handleSignIn();
+    }
+  }
+
+  async function handleSignIn() {
+    if (!signInData.email || !signInData.password) {
+      return alert("Preencha todos os campos");
+    }
+
+    try {
+      await signIn(signInData);
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert("Não foi possível logar.");
+      }
+    }
   }
 
   return (
@@ -41,6 +59,7 @@ export function SignIn() {
           placeholder="Exemplo: exemplo@exemplo.com.br"
           type="text"
           onChange={updateSignInData}
+          onKeyDown={handleKeyPress}
         />
 
         <Input
@@ -49,6 +68,7 @@ export function SignIn() {
           placeholder="No mínimo 6 caracteres"
           type="password"
           onChange={updateSignInData}
+          onKeyDown={handleKeyPress}
         />
 
         <Button title="Entrar" onClick={handleSignIn} />
