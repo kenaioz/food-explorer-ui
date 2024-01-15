@@ -65,6 +65,7 @@ export function CustomTable({ data, headers }) {
 
     setCurrentRole(userData.role);
   };
+
   const handleClose = () => setOpen(false);
 
   function updateUserData(field, data) {
@@ -84,9 +85,11 @@ export function CustomTable({ data, headers }) {
     if (!userData.name) {
       return alert("Preencha o nome");
     }
+
     if (!userData.email) {
       return alert("Selecione a categoria");
     }
+
     if (
       (!userData.old_password && userData.new_password) ||
       (userData.old_password && !userData.new_password)
@@ -94,6 +97,10 @@ export function CustomTable({ data, headers }) {
       return alert(
         "Os dois campos de senha precisam estar preenchidos ou vazios"
       );
+    }
+
+    if (userData.new_password.length < 6) {
+      return alert("A nova senha deve ter pelo menos 6 caracteress");
     }
 
     try {

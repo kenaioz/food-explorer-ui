@@ -39,7 +39,13 @@ import { getAllIngredients } from "../../services/ingredients";
 
 export function Edit() {
   const [imageFile, setImageFile] = useState(null);
-  const [foodData, setFoodData] = useState({});
+  const [foodData, setFoodData] = useState({
+    name: "",
+    category: 0,
+    ingredients: [],
+    price: "",
+    description: "",
+  });
 
   const [ingredientsData, setIngredientsData] = useState([]);
   const [categoriesData, setCategoriesData] = useState([]);
@@ -103,6 +109,7 @@ export function Edit() {
     }
 
     if (ingredientsIds.includes(newIngredientId)) {
+      setNewIngredientId(0);
       return alert("O ingrediente não pode ser adicionado duas vezes");
     }
 
@@ -110,10 +117,10 @@ export function Edit() {
       (ingredient) => ingredient.id === newIngredientId
     );
 
-    const updatedingredientsIds = [...ingredientsIds, newIngredientId];
+    const updatedIngredientsIds = [...ingredientsIds, newIngredientId];
     setSelectedIngredients((prevState) => [...prevState, ingredient]);
-    setIngredientsIds(updatedingredientsIds);
-    updateFormsData("ingredients", updatedingredientsIds);
+    setIngredientsIds(updatedIngredientsIds);
+    updateFormsData("ingredients", updatedIngredientsIds);
     setNewIngredientId(0);
   }
 
@@ -138,6 +145,24 @@ export function Edit() {
   }
 
   async function handleForms() {
+    if (!foodData.name) {
+      return alert("Preencha o nome");
+    }
+    if (!foodData.category) {
+      return alert("Selecione a categoria");
+    }
+    if (newIngredientId) {
+      return alert(
+        "Você esqueceu um ingrediente a ser adicionado, clique no + para adicionar ou remova o ingrediente"
+      );
+    }
+    if (!foodData.price) {
+      return alert("Preencha o preço");
+    }
+    if (!foodData.description) {
+      return alert("Preencha a descrição");
+    }
+
     try {
       await updateFood(foodData);
       if (imageFile) {

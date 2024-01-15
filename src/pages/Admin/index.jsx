@@ -105,8 +105,7 @@ export function AdminPanel() {
                 <legend>Adicionar ingredientes</legend>
 
                 <span>
-                  Ainda não é possivel a exclusão e edição de ingredientes via
-                  interface, faça isso com cuidado direto no banco
+                  Ainda não é possivel a exclusão e edição de ingredientes.
                 </span>
 
                 <TextArea

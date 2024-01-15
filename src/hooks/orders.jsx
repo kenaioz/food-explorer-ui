@@ -27,6 +27,10 @@ function OrdersProvider({ children }) {
       setOrders(newOrders);
       localStorage.setItem("@food_explorer:orders", JSON.stringify(newOrders));
     }
+
+    return alert(
+      `"${newOrder.name} (${newOrder.quantity})" foi adicionado aos pedidos`
+    );
   }
 
   function handleRemoveOrder(orderId) {

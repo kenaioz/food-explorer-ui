@@ -33,7 +33,7 @@ export function Card({ id, image, title, description, price }) {
   }
 
   function handleFavorities() {
-    alert("Favoritos não está funcionando mas será adicionado em breve");
+    alert("Favoritos ainda não está funcionando mas será adicionado em breve");
   }
 
   function handleAddOrders() {

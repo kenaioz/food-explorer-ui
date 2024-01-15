@@ -47,7 +47,7 @@ export function Create() {
 
   const [newIngredientId, setNewIngredientId] = useState(0);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredientsIds, setIngredients] = useState([]);
 
   const navigate = useNavigate();
 
@@ -75,7 +75,8 @@ export function Create() {
       return alert("Selecione um ingrediente antes de adiciona-lo");
     }
 
-    if (ingredients.includes(newIngredientId)) {
+    if (ingredientsIds.includes(newIngredientId)) {
+      setNewIngredientId(0);
       return alert("O ingrediente não pode ser adicionado duas vezes");
     }
 
@@ -83,10 +84,10 @@ export function Create() {
       (ingredient) => ingredient.id === newIngredientId
     );
 
-    const updatedingredientsIds = [...ingredients, newIngredientId];
+    const updatedIngredientsIds = [...ingredientsIds, newIngredientId];
     setSelectedIngredients((prevState) => [...prevState, ingredient]);
-    setIngredients([...ingredients, newIngredientId]);
-    updateFormsData("ingredients", updatedingredientsIds);
+    setIngredients(updatedIngredientsIds);
+    updateFormsData("ingredients", updatedIngredientsIds);
     setNewIngredientId(0);
   }
 
@@ -95,7 +96,7 @@ export function Create() {
       prevState.filter((ingredient) => ingredient.id !== deleted)
     );
 
-    const filteredIds = ingredients.filter(
+    const filteredIds = ingredientsIds.filter(
       (ingredient) => ingredient !== deleted
     );
     setIngredients(filteredIds);
@@ -120,8 +121,10 @@ export function Create() {
     if (!foodData.category) {
       return alert("Selecione a categoria");
     }
-    if (!foodData.ingredients) {
-      return alert("Selecione os ingredientes");
+    if (newIngredientId) {
+      return alert(
+        "Você esqueceu um ingrediente a ser adicionado, clique no + para adicionar ou remova o ingrediente"
+      );
     }
     if (!foodData.price) {
       return alert("Preencha o preço");

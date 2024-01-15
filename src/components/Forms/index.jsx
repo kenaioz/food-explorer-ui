@@ -113,6 +113,7 @@ export function IngredientItem({ value, onClick }) {
   return (
     <ContainerItem>
       <input
+        name={value}
         type="text"
         value={value}
         readOnly={true}
@@ -136,6 +137,7 @@ export function IngredientSelect({ ingredients, onChange, onClick, ...rest }) {
   return (
     <ContainerItemSelect $value={selectedIngredient}>
       <select
+        id={rest.id}
         value={selectedIngredient}
         onChange={(e) => {
           setSelectedIngredient(e.target.value);
@@ -174,11 +176,16 @@ export function FileUploader({ imageSelected = false, label, ...rest }) {
       <span>{label}</span>
       <InputIconWrapper htmlFor={rest.id}>
         <div>
-          {!imageSelected ? <FiUpload size={24} /> : <FiCheck size={24} />}
           {!imageSelected ? (
-            <span>Selecione uma imagem</span>
+            <>
+              <FiUpload size={24} />
+              <span>Selecione uma imagem</span>
+            </>
           ) : (
-            <span>Imagem Selecionada</span>
+            <>
+              <FiCheck size={24} />
+              <span>Imagem Selecionada</span>
+            </>
           )}
         </div>
         <ContainerFile type="file" {...rest}></ContainerFile>

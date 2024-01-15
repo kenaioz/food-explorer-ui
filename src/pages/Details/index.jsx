@@ -55,7 +55,6 @@ export function Details() {
       quantity,
     };
     handleNewOrders(order);
-    alert("Pedido adicionado");
   }
 
   function handleEdit(id) {
