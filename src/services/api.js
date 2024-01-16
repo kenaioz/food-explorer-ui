@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3333",
+  baseURL: "https://food-explorer-api-ihgd.onrender.com",
 });
 
 const createSession = (token) => {
