@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 
 import { Container } from "./styles";
 
-export function InputSearch({ icon: Icon, onChange }) {
+import { FiSearch } from "react-icons/fi";
+
+export function InputSearch({ id, onChange, onClick }) {
   const [inputValue, setInputValue] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   function handleKeyPress(e) {
     if (e.key === "Enter") {
@@ -27,12 +30,12 @@ export function InputSearch({ icon: Icon, onChange }) {
 
   return (
     <Container>
-      {Icon && <Icon size={20} />}
+      <FiSearch size={20} onClick={onClick} />
       <input
+        id={id}
         autoComplete="off"
         type="text"
         value={inputValue}
-        id="search"
         placeholder="Busque por pratos ou ingredientes"
         onChange={(e) => {
           setInputValue(e.target.value);

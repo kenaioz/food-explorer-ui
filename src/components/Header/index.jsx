@@ -1,15 +1,25 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 
-import { FiSearch, FiLogOut } from "react-icons/fi";
+import { FiLogOut, FiX } from "react-icons/fi";
+import { RxHamburgerMenu } from "react-icons/rx";
 import { PiReceipt } from "react-icons/pi";
 import { IoMdSettings } from "react-icons/io";
 
-import { Container, NavBar, HeaderButton } from "./styles";
+import {
+  Container,
+  NavBarDesktop,
+  NavBarMobile,
+  HeaderButton,
+  SideMenu,
+  LayoutSideMenu,
+  HeaderSideMenu,
+} from "./styles";
 
 import { Layout } from "../Layout";
 import { ButtonIcon } from "../ButtonIcon";
 import { InputSearch } from "../InputSearch";
+import { Footer } from "../Footer";
 
 import logoSVG from "../../assets/Logo.svg";
 import LogoAdminSVG from "../../assets/LogoAdmin.svg";
@@ -20,9 +30,9 @@ import { USER_PROFILE } from "../../utils/roles";
 import { useOrders } from "../../hooks/orders";
 
 export function Header({ onChange }) {
-  const [, setSearchParams] = useSearchParams();
-
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [ordersLength, setOrdersLength] = useState(0);
+  const [, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,7 +55,7 @@ export function Header({ onChange }) {
   function handleHome() {
     if (location.pathname == "/") {
       setSearchParams("");
-      return window.location.reload();
+      return window.location.reload(false);
     }
     navigate("/");
   }
@@ -62,7 +72,7 @@ export function Header({ onChange }) {
   return (
     <Container>
       <Layout>
-        <NavBar>
+        <NavBarDesktop>
           <img
             src={
               [USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(user.role)
@@ -73,7 +83,7 @@ export function Header({ onChange }) {
             onClick={handleHome}
           />
 
-          <InputSearch icon={FiSearch} onChange={onChange} />
+          <InputSearch id="desktopSearch" onChange={onChange} />
 
           {[USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(user.role) ? (
             <>
@@ -94,8 +104,93 @@ export function Header({ onChange }) {
           )}
 
           <ButtonIcon icon={FiLogOut} size={24} onClick={handleSignOut} />
-        </NavBar>
+        </NavBarDesktop>
+
+        <NavBarMobile>
+          <ButtonIcon
+            icon={RxHamburgerMenu}
+            size={24}
+            onClick={() => {
+              setMenuIsOpen(true);
+              document.body.style.overflow = "hidden";
+            }}
+          />
+
+          <img
+            src={
+              [USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(user.role)
+                ? LogoAdminSVG
+                : logoSVG
+            }
+            alt="Logo"
+            onClick={handleHome}
+          />
+          {![USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(user.role) && (
+            <ButtonIcon
+              icon={PiReceipt}
+              size={24}
+              onClick={handleOrders}
+              quantity={ordersLength}
+            />
+          )}
+        </NavBarMobile>
       </Layout>
+
+      <SideMenu data-menu-is-open={menuIsOpen}>
+        <HeaderSideMenu>
+          <ButtonIcon
+            icon={FiX}
+            size={24}
+            onClick={() => {
+              setMenuIsOpen(false);
+              document.body.style.overflow = "auto";
+            }}
+          />
+
+          <span>Menu</span>
+        </HeaderSideMenu>
+
+        <LayoutSideMenu>
+          <InputSearch
+            id="mobileSearch"
+            onChange={onChange}
+            onClick={() => {
+              setMenuIsOpen(false);
+              document.body.style.overflow = "auto";
+            }}
+          />
+
+          <ul>
+            {[USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(user.role) && (
+              <>
+                <li
+                  onClick={() => {
+                    handleNewFood(), (document.body.style.overflow = "auto");
+                  }}
+                >
+                  Novo Prato
+                </li>
+                <li
+                  onClick={() => {
+                    handleAdmin(), (document.body.style.overflow = "auto");
+                  }}
+                >
+                  Configurações
+                </li>
+              </>
+            )}
+            <li
+              onClick={() => {
+                handleSignOut(), (document.body.style.overflow = "auto");
+              }}
+            >
+              Sair
+            </li>
+          </ul>
+        </LayoutSideMenu>
+
+        <Footer />
+      </SideMenu>
     </Container>
   );
 }

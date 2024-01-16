@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
 
 export const Container = styled.div`
   width: 100%;
@@ -27,7 +28,15 @@ export const Container = styled.div`
   }
 
   > svg {
-    margin-left: 145px;
+    margin-left: 140px;
     color: ${({ theme }) => theme.COLORS.GRAY_600};
+
+    @media (max-width: ${DEVICE_BREAKPOINTS.XL}) {
+      margin-left: 60px;
+    }
+
+    @media (max-width: ${DEVICE_BREAKPOINTS.SM}) {
+      margin-left: 14px;
+    }
   }
 `;

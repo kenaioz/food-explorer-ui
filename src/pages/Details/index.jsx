@@ -91,8 +91,6 @@ export function Details() {
               </FoodInfos>
 
               <FoodActions>
-                <Quantity quantity={quantity} setQuantity={setQuantity} />
-
                 {[USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(
                   user.role
                 ) ? (
@@ -101,10 +99,14 @@ export function Details() {
                     onClick={() => handleEdit(params.id)}
                   />
                 ) : (
-                  <SmallButton
-                    title={`Incluir ∙ ${foodData.price}`}
-                    onClick={handleAddOrders}
-                  />
+                  <>
+                    <Quantity quantity={quantity} setQuantity={setQuantity} />
+
+                    <SmallButton
+                      title={`Incluir ∙ ${foodData.price}`}
+                      onClick={handleAddOrders}
+                    />
+                  </>
                 )}
               </FoodActions>
             </FoodContent>

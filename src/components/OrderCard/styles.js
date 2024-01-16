@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
 
 export const Container = styled.div`
   position: relative;
@@ -14,6 +15,10 @@ export const Container = styled.div`
   border: 1px solid ${({ theme }) => theme.COLORS.DARK_300};
 
   background: ${({ theme }) => theme.COLORS.DARK_200};
+
+  @media (max-width: ${DEVICE_BREAKPOINTS.SM}) {
+    width: 210px;
+  }
 
   > span {
     width: 25px;
@@ -42,7 +47,10 @@ export const CardContent = styled.div`
   > img {
     position: relative;
     width: 176px;
-    height: 176px;
+
+    @media (max-width: ${DEVICE_BREAKPOINTS.SM}) {
+      width: 90px;
+    }
   }
 
   h1 {
@@ -51,6 +59,10 @@ export const CardContent = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: 140%;
+
+    @media (max-width: ${DEVICE_BREAKPOINTS.SM}) {
+      font-size: 0.875rem;
+    }
   }
 
   > p {
@@ -67,5 +79,12 @@ export const CardContent = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 160%;
+
+    @media (max-width: ${DEVICE_BREAKPOINTS.SM}) {
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 100%;
+    }
   }
 `;

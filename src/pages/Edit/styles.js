@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
 
 export const Container = styled.div`
   position: relative;
@@ -37,16 +38,32 @@ export const Row1 = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 32px;
+
+  @media (max-width: ${DEVICE_BREAKPOINTS.SM}) {
+    flex-direction: column;
+  }
 `;
 export const Row2 = styled.div`
   display: flex;
   gap: 32px;
+
+  @media (max-width: ${DEVICE_BREAKPOINTS.SM}) {
+    flex-direction: column;
+  }
 `;
 export const Row3 = styled.div`
   display: flex;
+
+  @media (max-width: ${DEVICE_BREAKPOINTS.SM}) {
+    flex-direction: column;
+  }
 `;
 export const Row4 = styled.div`
   display: flex;
   gap: 32px;
   justify-content: end;
+
+  @media (max-width: ${DEVICE_BREAKPOINTS.SM}) {
+    justify-content: space-between;
+  }
 `;

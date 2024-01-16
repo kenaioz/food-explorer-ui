@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
 
 export const LabelInputWrapper = styled.div`
   display: flex;
@@ -9,6 +10,10 @@ export const LabelInputWrapper = styled.div`
   width: 100%;
 
   flex: ${({ $bigger }) => ($bigger ? 2 : 1)};
+
+  @media (max-width: ${DEVICE_BREAKPOINTS.MD}) {
+    flex: 1;
+  }
 `;
 
 export const ContainerInput = styled.input`
@@ -178,19 +183,35 @@ export const InputIconWrapper = styled.label`
   background-color: ${({ theme }) => theme.COLORS.DARK_800};
   border: 0;
 
+  @media (max-width: ${DEVICE_BREAKPOINTS.XL}) {
+    padding: 12px;
+  }
+
   div {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 8px;
-  }
 
-  span {
-    font-family: Poppins;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 24px;
+    span {
+      font-family: Poppins;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 24px;
+
+      @media (max-width: ${DEVICE_BREAKPOINTS.XL}) {
+        font-size: 12px;
+      }
+
+      @media (max-width: ${DEVICE_BREAKPOINTS.MD}) {
+        display: none;
+      }
+
+      @media (max-width: ${DEVICE_BREAKPOINTS.SM}) {
+        display: flex;
+      }
+    }
   }
 `;
 

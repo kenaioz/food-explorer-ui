@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { Container, ContentWrapper, HomeBanner } from "./styles";
+import {
+  Container,
+  ContentWrapper,
+  HomeBanner,
+  HomeBannerText,
+} from "./styles";
 
 import { Header } from "../../components/Header";
 import { CardsSection } from "../../components/CardsSection";
@@ -116,6 +121,12 @@ export function Home() {
             <>
               <HomeBanner>
                 <img src={Banner} alt="Banner" />
+                <HomeBannerText>
+                  <h1>Sabores inigualáveis</h1>
+                  <span>
+                    Sinta o cuidado do preparo com ingredientes selecionados
+                  </span>
+                </HomeBannerText>
               </HomeBanner>
               <CardsSection title="Refeições">
                 <Swiper

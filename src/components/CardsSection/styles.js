@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
 
 export const Container = styled.div`
   margin: 48px 0;
@@ -11,5 +12,9 @@ export const Container = styled.div`
     line-height: 140%;
 
     margin-bottom: 23px;
+
+    @media (max-width: ${DEVICE_BREAKPOINTS.SM}) {
+      font-size: 1.125rem;
+    }
   }
 `;

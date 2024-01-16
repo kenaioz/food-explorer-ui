@@ -9,11 +9,10 @@ export const Container = styled(Link)`
   color: ${({ theme }) => theme.COLORS.WHITE};
   border-radius: 7px;
   overflow: hidden;
-  
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  
 
   > svg {
     flex: 1;
