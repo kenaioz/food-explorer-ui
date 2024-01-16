@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { Container } from "./styles";
 
@@ -10,7 +10,6 @@ export function InputSearch({ id, onChange, onClick }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   function handleKeyPress(e) {
     if (e.key === "Enter") {

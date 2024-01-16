@@ -1,11 +1,7 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 import { Container, CardContent } from "./styles";
 
 import { PiTrash } from "react-icons/pi";
 
-import { SmallButton } from "../SmallButton";
 import { ButtonIcon } from "../ButtonIcon";
 
 import { api } from "../../services/api";
@@ -13,8 +9,6 @@ import { useOrders } from "../../hooks/orders";
 
 export function OrderCard({ id, image, title, quantity, price }) {
   const { handleRemoveOrder } = useOrders();
-
-  const navigate = useNavigate();
 
   function handleDelete() {
     handleRemoveOrder(id);
