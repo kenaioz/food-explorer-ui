@@ -12,7 +12,7 @@ import {
 
 import { Header } from "../../components/Header";
 import { BackWrapper } from "../../components/BackWrapper";
-import { Chip, ChipWrapper } from "../../components/Chip/Index";
+import { Chip, ChipWrapper } from "../../components/Chip";
 import { Quantity } from "../../components/Quantity";
 import { SmallButton } from "../../components/SmallButton";
 import { Footer } from "../../components/Footer";

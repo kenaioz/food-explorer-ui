@@ -99,8 +99,10 @@ export function CustomTable({ data, headers }) {
       );
     }
 
-    if (userData.new_password.length < 6) {
-      return alert("A nova senha deve ter pelo menos 6 caracteress");
+    if (userData.new_password) {
+      if (userData.new_password.length < 6) {
+        return alert("A nova senha deve ter pelo menos 6 caracteress");
+      }
     }
 
     try {
@@ -137,57 +139,63 @@ export function CustomTable({ data, headers }) {
     <>
       <Modal open={open} onClose={handleClose}>
         <Box sx={ModalStyle}>
-          <FormsFieldset>
-            <legend>Editar usuário</legend>
+          <form>
+            <FormsFieldset>
+              <legend>Editar usuário</legend>
 
-            <Input
-              id="name"
-              label="Nome"
-              placeholder="Nome do usuário"
-              value={userData.name}
-              onChange={updateUserData}
-            />
-            <Input
-              id="email"
-              label="Email"
-              placeholder="Email do usuário"
-              value={userData.email}
-              onChange={updateUserData}
-            />
-            {![USER_PROFILE.ADMIN].includes(currentRole) && (
-              <Dropdown
-                id="role"
-                label="Nova role"
-                placeholder="Selecione a nova role do usuário"
-                categories={roleOptions}
-                onChange={updateUserRole}
-              />
-            )}
-            <PasswordRow>
               <Input
-                id="old_password"
-                type="password"
-                label="Senha antiga"
-                placeholder="Digite a senha antiga"
+                id="name"
+                label="Nome"
+                placeholder="Nome do usuário"
+                value={userData.name}
                 onChange={updateUserData}
               />
               <Input
-                id="new_password"
-                type="password"
-                label="Nova senha"
-                placeholder="Digite a nova senha"
+                id="email"
+                label="Email"
+                placeholder="Email do usuário"
+                value={userData.email}
                 onChange={updateUserData}
               />
-            </PasswordRow>
-
-            <ActionRow>
               {![USER_PROFILE.ADMIN].includes(currentRole) && (
-                <SmallButton title="Excluir" secundary onClick={handleDelete} />
+                <Dropdown
+                  id="role"
+                  label="Nova role"
+                  placeholder="Selecione a nova role do usuário"
+                  categories={roleOptions}
+                  onChange={updateUserRole}
+                />
               )}
+              <PasswordRow>
+                <Input
+                  id="old_password"
+                  type="password"
+                  label="Senha antiga"
+                  placeholder="Digite a senha antiga"
+                  onChange={updateUserData}
+                />
+                <Input
+                  id="new_password"
+                  type="password"
+                  label="Nova senha"
+                  placeholder="Digite a nova senha"
+                  onChange={updateUserData}
+                />
+              </PasswordRow>
 
-              <SmallButton title="Salvar alterações" onClick={handleUpdate} />
-            </ActionRow>
-          </FormsFieldset>
+              <ActionRow>
+                {![USER_PROFILE.ADMIN].includes(currentRole) && (
+                  <SmallButton
+                    title="Excluir"
+                    secundary
+                    onClick={handleDelete}
+                  />
+                )}
+
+                <SmallButton title="Salvar alterações" onClick={handleUpdate} />
+              </ActionRow>
+            </FormsFieldset>
+          </form>
         </Box>
       </Modal>
 
