@@ -85,7 +85,13 @@ export function Header({ onChange }) {
 
           <InputSearch id="desktopSearch" onChange={onChange} />
 
-          {[USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(user.role) ? (
+          {[USER_PROFILE.EDITOR].includes(user.role) && (
+            <HeaderButton type="button" onClick={handleNewFood}>
+              <span>Novo Prato</span>
+            </HeaderButton>
+          )}
+
+          {[USER_PROFILE.ADMIN].includes(user.role) && (
             <>
               <HeaderButton type="button" onClick={handleNewFood}>
                 <span>Novo Prato</span>
@@ -96,7 +102,9 @@ export function Header({ onChange }) {
                 <span>Configurações</span>
               </HeaderButton>
             </>
-          ) : (
+          )}
+
+          {![USER_PROFILE.ADMIN, USER_PROFILE.EDITOR].includes(user.role) && (
             <HeaderButton type="button" onClick={handleOrders}>
               <PiReceipt />
               <span>Pedidos ({ordersLength})</span>
