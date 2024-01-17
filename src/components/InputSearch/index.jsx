@@ -19,12 +19,10 @@ export function InputSearch({ id, onChange, onClick }) {
   }
 
   function handleMobileSearch() {
-    console.log("teste");
     if (location.pathname != "/") {
-      onClick;
       navigate(`/?search=${inputValue}`);
     } else {
-      onClick;
+      onClick();
     }
   }
 
