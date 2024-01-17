@@ -24,9 +24,18 @@ Além do exigido tomei liberdade para adicionar algumas coisas, por exemplo a se
 Para realizar pesquisas no desktop na home você pode apenas digitar o que procura na barra de pesquisa e clicar em enter, mas no mobile é necessário clicar no icone de lupa ao lado da barra de pesquisa
 
 
+## Usuários existentes para testes
+
+ - Customer - customer@email.com - 654321
+ - Editor - editor@email.com - 123456
+ - Admin - admin@email.com - 123456
+
+
 ## Stack utilizada
 
 **Front-end:** React, Styled-Components
 
 **Back-end:** Node, Express, SQLite
+
+**Deploy:** Netlify
 
