@@ -8,7 +8,7 @@ import { CardsSection } from "../../components/CardsSection";
 import { CustomTable } from "../../components/CustomTable";
 import { Button } from "../../components/Button";
 import { TextArea } from "../../components/Forms";
-import { Chip, ChipWrapper } from "../../components/Chip/Index";
+import { Chip, ChipWrapper } from "../../components/Chip/";
 import { Footer } from "../../components/Footer";
 
 import { Layout } from "../../components/Layout";
