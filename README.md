@@ -19,9 +19,11 @@ Além do exigido tomei liberdade para adicionar algumas coisas, por exemplo a se
 
 
 
-## Dicas
+## Informações
 
 Para realizar pesquisas no desktop na home você pode apenas digitar o que procura na barra de pesquisa e clicar em enter, mas no mobile é necessário clicar no icone de lupa ao lado da barra de pesquisa
+
+Lembrando que na versão gratuita do Render se a API ficar um tempo ociosa ela desativa, então tenha pacienca ao executa-la pela primeira vez até ela ficar ativa novamente.
 
 
 ## Usuários existentes para testes
