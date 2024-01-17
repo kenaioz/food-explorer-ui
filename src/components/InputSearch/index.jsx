@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 
 import { Container } from "./styles";
 
@@ -10,10 +10,21 @@ export function InputSearch({ id, onChange, onClick }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   function handleKeyPress(e) {
     if (e.key === "Enter") {
       navigate(`/?search=${inputValue}`);
+    }
+  }
+
+  function handleMobileSearch() {
+    console.log("teste");
+    if (location.pathname != "/") {
+      onClick;
+      navigate(`/?search=${inputValue}`);
+    } else {
+      onClick;
     }
   }
 
@@ -29,7 +40,7 @@ export function InputSearch({ id, onChange, onClick }) {
 
   return (
     <Container>
-      <FiSearch size={20} onClick={onClick} />
+      <FiSearch size={20} onClick={handleMobileSearch} />
       <input
         id={id}
         autoComplete="off"
