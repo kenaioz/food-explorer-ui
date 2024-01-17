@@ -33,9 +33,12 @@ Para realizar pesquisas no desktop na home você pode apenas digitar o que procu
 
 ## Stack utilizada
 
-**Front-end:** React, Styled-Components
+[**Front-end:**](https://github.com/kenaioz/food-explorer-ui) React, Styled-Components
 
-**Back-end:** Node, Express, SQLite
+[**Deploy:**](https://main--cool-kitten-558d66.netlify.app/) Netlify
 
-**Deploy:** Netlify
+
+[**Back-end:**](https://github.com/kenaioz/food-explorer-api) Node, Express, SQLite
+
+[**Deploy:**](https://food-explorer-api-ihgd.onrender.com) Render
 
