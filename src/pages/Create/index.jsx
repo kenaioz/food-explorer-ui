@@ -106,15 +106,9 @@ export function Create() {
 
   function updateFormsData(field, data) {
     if (field === "price") {
-      if (isNaN(data)) {
-        return alert(
-          "O preço deve conter apenas números e um ponto separando as casas decimais"
-        );
-      }
       const numeroArredondado = Number(data).toFixed(2);
 
       data = numeroArredondado;
-      console.log("data", data);
     }
 
     setFoodData({
@@ -138,7 +132,11 @@ export function Create() {
         "Você esqueceu um ingrediente a ser adicionado, clique no + para adicionar ou remova o ingrediente"
       );
     }
-    if (!foodData.price || Number(foodData.price) <= 0) {
+    if (
+      !foodData.price ||
+      isNaN(foodData.price) ||
+      Number(foodData.price) <= 0
+    ) {
       return alert(
         "Preencha o preço com um valor válido e maior que 0.\n \n Exemplos de formatos aceitos: (1.00), (1), (1.1), (01.0)"
       );
